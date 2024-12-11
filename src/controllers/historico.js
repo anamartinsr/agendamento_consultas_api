@@ -1,12 +1,11 @@
-import User from '../models/user';
+import Historico from '../models/historico';
 
-class UserController {
-
+class HistoricoController {
     async create(req, res) {
         try {
             const dados = req.body;
-            const novoUser = await User.create(dados);
-            res.json(novoUser);
+            const novoHistorico = await Historico.create(dados);
+            return res.status(201).json(novoHistorico);
         } catch (e) {
             return res.status(400).json({
                 errors: e.errors.map((err) => err.message),
@@ -15,8 +14,8 @@ class UserController {
     }
     async index(req, res) {
         try {
-            const users = await User.findAll({ attributes: ['id', 'nome', 'cpf', 'localizacao'] });
-            return res.json(users);
+            const historico = await Historico.findAll();
+            return res.json(historico);
         } catch (e) {
             return res.status(400).json({
                 errors: e.errors.map((err) => err.message),
@@ -26,18 +25,18 @@ class UserController {
     async show(req, res) {
         try {
             const { id } = req.params;
-            const user = await User.findByPk(id);
-            if (!user) {
-                return res.status(404).json({ error: 'User não encontrado' });
+            const historico = await Historico.findByPk(id);
+            if (!historico) {
+                return res.status(404).json({ error: 'Histórico não encontrado' });
             }
-            const { nome, cpf, localizacao } = user;
-            return res.json({ nome, cpf, localizacao });
+            return res.json(historico);
         } catch (e) {
             return res.status(400).json({
                 errors: e.errors.map((err) => err.message),
             });
         }
     }
-
 }
-export default new UserController();
+
+export default new HistoricoController();
+
