@@ -1,13 +1,12 @@
 import { Router } from 'express';
-import User from '../controllers/User';
+import Consulta from '../controllers/Consulta';
 
 const router = new Router();
-
-router.get('/', User.index);
-router.get('/:id', User.show);
-router.post('/', User.create);
-router.put('/:id', User.update);
-router.delete('/:id', User.delete);
+router.post('/',  Consulta.create);
+router.get('/:id', Consulta.show);
+router.get('/', Consulta.index);
+router.put('/:id', Consulta.update);
+router.delete('/:id', Consulta.delete);
 
 export default router;
 

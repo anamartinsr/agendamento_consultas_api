@@ -1,0 +1,100 @@
+// This isyourPrismaschemafile,
+//learnmoreaboutitinthedocs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Status {
+  RESERVADA
+  CANCELADA
+  CONCLUIDA
+  DISPONIVEL
+}
+
+model User {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  nome         String
+  idade        Int
+  cpf          String?       @unique
+  email        String        @unique
+  senha        String
+  tipoUser     String
+  fotoPerfil   String?
+  descricao    String?
+  cep          String
+  numero       String
+  rua          String
+  cidade       String
+  telefone     String
+  consulta     Consulta[]
+  historico    Historico[]
+  profissional Profissional?
+}
+
+model Profissional {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  especialidade    String
+  usuarioId        String            @unique @db.ObjectId
+  user             User              @relation(fields: [usuarioId], references: [id])
+  procedimentos    Procedimento[]
+  consultas        Consulta[]
+  disponibilidades Disponibilidade[]
+}
+
+model Procedimento {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  nome           String
+  valor          Float
+  recomendacao   String
+  profissionalId String       @db.ObjectId
+  profissional   Profissional @relation(fields: [profissionalId], references: [id])
+  consultas      Consulta[]
+}
+
+model Disponibilidade {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  profissionalId String       @db.ObjectId
+  profissional   Profissional @relation(fields: [profissionalId], references: [id])
+  data           DateTime
+  horario        String
+  status         Status
+}
+
+model Consulta {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  descricao      String
+  status         Status
+  data           DateTime
+  isDeleted      Boolean      @default(false)
+  usuariosId     String       @db.ObjectId
+  user           User         @relation(fields: [usuariosId], references: [id])
+  profissionalId String       @db.ObjectId
+  profissional   Profissional @relation(fields: [profissionalId], references: [id])
+  procedimentoId String       @db.ObjectId
+  procedimento   Procedimento @relation(fields: [procedimentoId], references: [id])
+}
+
+model Historico {
+  id                     String    @id @default(auto()) @map("_id") @db.ObjectId
+  descricao              String
+  valor                  Float
+  data                   DateTime
+  profissional           String
+  procedimento           String
+  usuariosId             String?   @db.ObjectId
+  user                   User?     @relation(fields: [usuariosId], references: [id])
+  consultaDescricao      String?
+  consultaData           DateTime?
+  consultaStatus         Status?
+  consultaValor          Float?
+  consultaProfissionalId String?
+}
