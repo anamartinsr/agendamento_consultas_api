@@ -4,10 +4,9 @@ class ProfissionalService {
 
     static async create(dados) {
         try {
-        // Verificar se o usuário com o 'usuarioId' existe
             const usuarioExistente = await prisma.user.findUnique({
                 where: {
-                    id: dados.usuarioId,  // Verifique se 'usuarioId' é válido
+                    id: dados.usuarioId,
                 },
             });
 
@@ -15,12 +14,11 @@ class ProfissionalService {
                 throw new Error('Usuário não encontrado');
             }
 
-            // Criar o profissional
             const profissionalCriado = await prisma.profissional.create({
                 data: {
                     especialidade: dados.especialidade,
-                    user: {  // Conectando diretamente o user
-                        connect: { id: dados.usuarioId },  // A relação será feita aqui
+                    user: {
+                        connect: { id: dados.usuarioId },
                     },
                 },
             });

@@ -7,10 +7,10 @@ class TokenService {
         });
     }
 
-    async isPasswordValid(user, password) {
-        if (!user || !user.senha) return false;
-        const bcrypt = await import('bcryptjs'); // Bcrypt pode ser carregado dinamicamente
-        return bcrypt.compare(password, user.senha);
+    async isSenhaValid(user, senha) {
+        if (!user.cpf || !user.senha) return false;
+        const bcrypt = await import('bcryptjs');
+        return bcrypt.compare(senha, user.senha);
     }
 }
 

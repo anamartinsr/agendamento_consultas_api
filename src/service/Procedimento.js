@@ -2,19 +2,16 @@ import prisma from '../../prisma/index';
 
 class ProcedimentoService {
     static async create(dados) {
-    // Validação se o usuariosId existe no banco de dados
         const profissionalExistente = await prisma.profissional.findUnique({
             where: {
-                id: dados.profissionalId,  // Verifica se o ID do usuário existe
+                id: dados.profissionalId,
             },
         });
 
-        // Se o usuário não for encontrado, lançar erro
         if (!profissionalExistente) {
             throw new Error('Profissional não encontrado');
         }
 
-        // Se o usuário existe, cria o cliente
         return prisma.procedimento.create({
             data: dados,
         });

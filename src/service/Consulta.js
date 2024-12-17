@@ -2,41 +2,36 @@ import prisma from '../../prisma/index';
 
 class ConsultaService {
     static async create(dados) {
-    // Validação se o usuariosId existe no banco de dados
         const userExistente = await prisma.user.findUnique({
             where: {
-                id: dados.usuariosId,  // Verifica se o ID do usuário existe
+                id: dados.usuariosId,
             },
         });
 
-        // Se o usuário não for encontrado, lançar erro
         if (!userExistente) {
             throw new Error('Usuario não encontrado');
         }
 
         const profissionalExistente = await prisma.profissional.findUnique({
             where: {
-                id: dados.profissionalId,  // Verifica se o ID do usuário existe
+                id: dados.profissionalId,
             },
         });
 
-        // Se o usuário não for encontrado, lançar erro
         if (!profissionalExistente) {
             throw new Error('Profissional não encontrado');
         }
 
         const procedimentoExistente = await prisma.procedimento.findUnique({
             where: {
-                id: dados.procedimentoId,  // Verifica se o ID do usuário existe
+                id: dados.procedimentoId,
             },
         });
 
-        // Se o usuário não for encontrado, lançar erro
         if (!procedimentoExistente) {
             throw new Error('Procedimento não encontrado');
         }
 
-        // Se o usuário existe, cria a
         return prisma.consulta.create({
             data: dados,
         });
@@ -74,6 +69,7 @@ class ConsultaService {
                         },
                     },
                 },
+                procedimento: true,
             },
         });
     }

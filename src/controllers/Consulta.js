@@ -1,9 +1,7 @@
 import ConsultaService from '../service/Consulta';
-
 class ConsultaController {
     async create(req, res) {
         try {
-            // Obtém os dados da requisição
             const dados = req.body;
 
             if (!dados.usuariosId) {
@@ -15,13 +13,10 @@ class ConsultaController {
             if (!dados.procedimentoId) {
                 return res.status(400).json({ error: 'procedimentoId é obrigatório' });
             }
-            // Passa os dados para o serviço de criação do profissional
             const novaConsulta = await ConsultaService.create(dados);
 
-            // Retorna o novo profissional criado
             return res.status(201).json(novaConsulta);
         } catch (e) {
-            // Se houver erro, retorna o erro
             return res.status(400).json({ error: e.message });
         }
     }

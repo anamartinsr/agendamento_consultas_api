@@ -1,22 +1,16 @@
 import ProfissonalService from '../service/Profissional';
-
 class ProfissionalController {
     async create(req, res) {
         try {
-        // Obtém os dados da requisição
             const dados = req.body;
 
-            // Verificar se 'usuarioId' foi passado corretamente
             if (!dados.usuarioId) {
                 return res.status(400).json({ error: 'usuarioId é obrigatório' });
             }
-            // Passa os dados para o serviço de criação do profissional
             const novoProfissional = await ProfissonalService.create(dados);
 
-            // Retorna o novo profissional criado
             return res.status(201).json(novoProfissional);
         } catch (e) {
-        // Se houver erro, retorna o erro
             return res.status(400).json({ error: e.message });
         }
     }

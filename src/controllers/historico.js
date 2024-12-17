@@ -4,6 +4,9 @@ class HistoricoController {
     async create(req, res) {
         try {
             const dados = req.body;
+            if (!dados.usuariosId) {
+                return res.status(400).json({ error: 'usuariosId é obrigatório' });
+            }
             const novoHistorico = await HistoricoService.create(dados);
             return res.status(201).json(novoHistorico);
         } catch (e) {

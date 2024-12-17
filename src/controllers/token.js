@@ -6,9 +6,9 @@ import TokenService from '../service/Token';
 
 class TokenController {
     async store(req, res) {
-        const { cpf = '', password = '' } = req.body;
+        const { cpf = '', senha = '' } = req.body;
 
-        if (!cpf || !password) {
+        if (!cpf || !senha) {
             return res.status(401).json({
                 errors: ['Credenciais inválidas'],
             });
@@ -16,7 +16,7 @@ class TokenController {
 
         try {
             const user = await TokenService.findUserByCPF(cpf);
-            if (!user || !(await TokenService.isPasswordValid(user, password))) {
+            if (!user || !(await TokenService.isSenhaValid(user, senha))) {
                 return res.status(401).json({
                     errors: ['Usuário ou senha inválidos'],
                 });

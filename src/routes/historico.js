@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import Historico from '../controllers/Historico';
-// import loginRequired from '../middlewares/loginRequired';
 
 const router = new Router();
 router.post('/', Historico.create);
