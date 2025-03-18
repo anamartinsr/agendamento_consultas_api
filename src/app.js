@@ -2,13 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import Historico from './src/routes/historico.js';
-import Token from './src/routes/token.js';
-import User from './src/routes/user.js';
-import Profissional from './src/routes/profissional.js';
-import Procedimento from './src/routes/procedimento.js';
-import Disponibilidade from './src/routes/disponibilidade.js';
-import Consulta from './src/routes/consulta.js';
+import Historico from './routes/historico.js';
+import Token from './routes/token.js';
+import User from './routes/user.js';
+import Profissional from './routes/profissional.js';
+import Procedimento from './routes/procedimento.js';
+import Disponibilidade from './routes/disponibilidade.js';
+import Consulta from './routes/consulta.js';
+import Email from './routes/email.js';
 
 const whiteList = [
     process.env.APP_URL_FRONT,
@@ -46,6 +47,8 @@ class App {
         this.app.use('/procedimento', Procedimento);
         this.app.use('/disponibilidade', Disponibilidade);
         this.app.use('/consulta', Consulta);
+        this.app.use('/email', Email);
+
     }
 }
 
