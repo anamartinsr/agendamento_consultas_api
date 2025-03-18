@@ -1,4 +1,4 @@
-import ProfissonalService from '../service/Profissional';
+import ProfissonalService from '../service/Profissional.js';
 class ProfissionalController {
     async create(req, res) {
         try {

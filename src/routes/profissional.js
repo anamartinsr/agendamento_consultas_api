@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Profissional from '../controllers/Profissional';
+import Profissional from '../controllers/Profissional.js';
 
 const router = new Router();
 

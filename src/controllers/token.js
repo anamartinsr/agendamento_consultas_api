@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import TokenService from '../service/Token';
+import TokenService from '../service/Token.js';
 
 class TokenController {
     async store(req, res) {

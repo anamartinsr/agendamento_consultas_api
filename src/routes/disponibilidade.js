@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Disponibilidade from '../controllers/Disponibilidade';
+import Disponibilidade from '../controllers/Disponibilidade.js';
 
 const router = new Router();
 

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Historico from '../controllers/Historico';
+import Historico from '../controllers/Historico.js';
 
 const router = new Router();
 

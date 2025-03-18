@@ -1,4 +1,4 @@
-import HistoricoService from '../service/Historico';
+import HistoricoService from '../service/Historico.js';
 
 class HistoricoController {
     async create(req, res) {

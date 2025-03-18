@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Procedimento from '../controllers/Procedimento';
+import Procedimento from '../controllers/Procedimento.js';
 
 const router = new Router();
 

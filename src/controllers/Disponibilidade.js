@@ -1,4 +1,4 @@
-import DisponibilidadeService from '../service/Disponibilidade';
+import DisponibilidadeService from '../service/Disponibilidade.js';
 
 class DisponibilidadeController {
     async create(req, res) {

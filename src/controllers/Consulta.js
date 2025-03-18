@@ -1,4 +1,4 @@
-import ConsultaService from '../service/Consulta';
+import ConsultaService from '../service/Consulta.js';
 class ConsultaController {
     async create(req, res) {
         try {

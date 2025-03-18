@@ -1,4 +1,4 @@
-import ProcedimentoService from '../service/Procedimento';
+import ProcedimentoService from '../service/Procedimento.js';
 class ProcedimentoController {
     async create(req, res) {
         try {

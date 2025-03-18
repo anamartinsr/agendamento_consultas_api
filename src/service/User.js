@@ -5,7 +5,7 @@
  * Utiliza o Prisma ORM para realizar operações CRUD.
  */
 
-import prisma from '../../prisma/index';
+import prisma from '../../prisma/index.js';
 
 class UserService {
     /**
