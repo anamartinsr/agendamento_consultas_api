@@ -1,63 +1,50 @@
+import { check, validationResult } from 'express-validator';
+import asyncHandler from 'express-async-handler';
 import DisponibilidadeService from '../service/Disponibilidade.js';
 
 class DisponibilidadeController {
-    async create(req, res) {
-        try {
-            const dados = req.body;
-
-            if (!dados.profissionalId) {
-                return res.status(400).json({ error: 'profissionalId é obrigatório' });
-            }
-            const novaDisponibilidade = await DisponibilidadeService.create(dados);
-
-            return res.status(201).json(novaDisponibilidade);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+    validate(method) {
+        switch (method) {
+            case 'create':
+                return [
+                    check('profissionalId', 'profissionalId é obrigatório').notEmpty()
+                ];
+            default:
+                return [];
         }
     }
 
-    async index(req, res) {
-        try {
-            const disponibilidade = await DisponibilidadeService.findAll();
-            return res.json(disponibilidade);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+    create = asyncHandler(async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
-    }
+        const novaDisponibilidade = await DisponibilidadeService.create(req.body);
+        res.status(201).json(novaDisponibilidade);
+    });
 
-    async show(req, res) {
-        try {
-            const { id } = req.params;
-            const disponibilidade = await DisponibilidadeService.findById(id);
-            if (!disponibilidade) {
-                return res.status(404).json({ error: 'Disponibilidade não encontrado' });
-            }
-            return res.json(disponibilidade);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
-        }
-    }
+    index = asyncHandler(async (req, res) => {
+        const disponibilidades = await DisponibilidadeService.findAll();
+        res.json(disponibilidades);
+    });
 
-    async update(req, res) {
-        try {
-            const { id } = req.params;
-            const dados = req.body;
-            const disponibilidadeAtualizado = await DisponibilidadeService.update(id, dados);
-            return res.json(disponibilidadeAtualizado);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+    show = asyncHandler(async (req, res) => {
+        const disponibilidade = await DisponibilidadeService.findById(req.params.id);
+        if (!disponibilidade) {
+            return res.status(404).json({ error: 'Disponibilidade não encontrada' });
         }
-    }
+        res.json(disponibilidade);
+    });
 
-    async delete(req, res) {
-        try {
-            const { id } = req.params;
-            await DisponibilidadeService.delete(id);
-            return res.status(204).send();
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
-        }
-    }
+    update = asyncHandler(async (req, res) => {
+        const disponibilidadeAtualizada = await DisponibilidadeService.update(req.params.id, req.body);
+        res.json(disponibilidadeAtualizada);
+    });
+
+    delete = asyncHandler(async (req, res) => {
+        await DisponibilidadeService.delete(req.params.id);
+        res.status(204).send();
+    });
 }
 
 export default new DisponibilidadeController();

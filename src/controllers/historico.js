@@ -1,61 +1,53 @@
+import { validationResult, body } from 'express-validator';
+import asyncHandler from 'express-async-handler';
 import HistoricoService from '../service/Historico.js';
 
 class HistoricoController {
-    async create(req, res) {
-        try {
-            const dados = req.body;
-            if (!dados.usuariosId) {
-                return res.status(400).json({ error: 'usuariosId é obrigatório' });
-            }
-            const novoHistorico = await HistoricoService.create(dados);
-            return res.status(201).json(novoHistorico);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+    validate(method) {
+        switch (method) {
+            case 'create':
+                return [
+                    body('usuariosId').notEmpty().withMessage('usuariosId é obrigatório')
+                ];
+            case 'update':
+                return [
+                    body('usuariosId').optional().notEmpty().withMessage('usuariosId não pode estar vazio')
+                ];
         }
     }
 
-    async index(req, res) {
-        try {
-            const historicos = await HistoricoService.findAll();
-            return res.json(historicos);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+    create = asyncHandler(async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
-    }
 
-    async show(req, res) {
-        try {
-            const { id } = req.params;
-            const historico = await HistoricoService.findById(id);
-            if (!historico) {
-                return res.status(404).json({ error: 'Histórico não encontrado' });
-            }
-            return res.json(historico);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
-        }
-    }
+        const novoHistorico = await HistoricoService.create(req.body);
+        res.status(201).json(novoHistorico);
+    });
 
-    async update(req, res) {
-        try {
-            const { id } = req.params;
-            const dados = req.body;
-            const historicoAtualizado = await HistoricoService.update(id, dados);
-            return res.json(historicoAtualizado);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
-        }
-    }
+    index = asyncHandler(async (req, res) => {
+        const historicos = await HistoricoService.findAll();
+        res.json(historicos);
+    });
 
-    async delete(req, res) {
-        try {
-            const { id } = req.params;
-            await HistoricoService.delete(id);
-            return res.status(204).send();
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+    show = asyncHandler(async (req, res) => {
+        const historico = await HistoricoService.findById(req.params.id);
+        if (!historico) {
+            return res.status(404).json({ error: 'Histórico não encontrado' });
         }
-    }
+        res.json(historico);
+    });
+
+    update = asyncHandler(async (req, res) => {
+        const historicoAtualizado = await HistoricoService.update(req.params.id, req.body);
+        res.json(historicoAtualizado);
+    });
+
+    delete = asyncHandler(async (req, res) => {
+        await HistoricoService.delete(req.params.id);
+        res.status(204).send();
+    });
 }
 
 export default new HistoricoController();
