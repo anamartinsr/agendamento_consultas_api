@@ -30,10 +30,10 @@ Uma API construída com **Node.js** para gerenciar cadastro de clientes e profis
 
 ```plaintext
 src/
-├── controllers/    # Lógica dos endpoints
-├── service/       # Lógica de negócios separada
-├── middlewares/    # Middlewares de autenticação e validação
-├── routes/         # Definição das rotas da API
+├── controllers/    
+├── service/      
+├── middlewares/    
+├── routes/        
 ```
 
 ## Funcionalidades
