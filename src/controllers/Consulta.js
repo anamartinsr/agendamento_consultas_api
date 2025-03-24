@@ -1,66 +1,51 @@
 import ConsultaService from '../service/Consulta.js';
+import { validationResult } from 'express-validator';
+import asyncHandler from 'express-async-handler';
+
 class ConsultaController {
-    async create(req, res) {
+    async create(req, res, next) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         try {
-            const dados = req.body;
-
-            if (!dados.usuariosId) {
-                return res.status(400).json({ error: 'usuariosId é obrigatório' });
-            }
-            if (!dados.profissionalId) {
-                return res.status(400).json({ error: 'profissionalId é obrigatório' });
-            }
-            if (!dados.procedimentoId) {
-                return res.status(400).json({ error: 'procedimentoId é obrigatório' });
-            }
-            const novaConsulta = await ConsultaService.create(dados);
-
-            return res.status(201).json(novaConsulta);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+            const novaConsulta = await ConsultaService.create(req.body);
+            res.status(201).json(novaConsulta);
+        } catch (error) {
+            next(error);
         }
     }
 
-    async index(req, res) {
+    async index(req, res, next) {
         try {
-            const consulta = await ConsultaService.findAll();
-            return res.json(consulta);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+            const consultas = await ConsultaService.findAll();
+            res.json(consultas);
+        } catch (error) {
+            next(error);
         }
     }
 
-    async show(req, res) {
+    async show(req, res, next) {
+        const { id } = req.params;
         try {
-            const { id } = req.params;
             const consulta = await ConsultaService.findById(id);
             if (!consulta) {
-                return res.status(404).json({ error: 'Consulta não encontrado' });
+                return res.status(404).json({ error: 'Consulta não encontrada' });
             }
-            return res.json(consulta);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+            res.json(consulta);
+        } catch (error) {
+            next(error);
         }
     }
 
-    async update(req, res) {
+    async update(req, res, next) {
+        const { id } = req.params;
         try {
-            const { id } = req.params;
-            const dados = req.body;
-            const ConsultaAtualizado = await ConsultaService.update(id, dados);
-            return res.json(ConsultaAtualizado);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
-        }
-    }
-
-    async delete(req, res) {
-        try {
-            const { id } = req.params;
-            await ConsultaService.delete(id);
-            return res.status(204).send();
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
+            const consultaAtualizada = await ConsultaService.update(id, req.body);
+            res.json(consultaAtualizada);
+        } catch (error) {
+            next(error);
         }
     }
 }
