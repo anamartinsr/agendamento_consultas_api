@@ -34,4 +34,3 @@ src/
 ├── middlewares/    
 ├── routes/        
 ```
-s
