@@ -34,43 +34,4 @@ src/
 ├── middlewares/    
 ├── routes/        
 ```
-
-## Como Rodar o Projeto
-
-### Requisitos
-- Node.js (versão 18+)
-- MongoDB
-
-### Configuração
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/ribbeiroana/agendamento_consultas_api.git
-   cd agendamento_consultas_api
-   ```
-
-2. Instale as dependências:
-   ```bash
-   npm install
-   ```
-
-3. Configure as variáveis de ambiente:
-   Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
-   ```env
-   DATABASE_URL=mongodb+srv://<usuario>:<senha>@<cluster>.mongodb.net/<database>
-   JWT_SECRET=sua-chave-secreta
-   ```
-
-4. Execute as migrações do banco de dados:
-   ```bash
-   npx prisma migrate dev
-   ```
-
-5. Inicie o servidor:
-   ```bash
-   npm run dev
-   ```
-
-## Scripts Disponíveis
-- `npm run dev`: Inicia o servidor em modo de desenvolvimento com **nodemon**.
-- `npm run lint`: Verifica a formatação do código com **ESLint**.
-- `npm run build`: Compila o código para produção com **Sucrase**.
+s
