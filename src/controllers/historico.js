@@ -8,10 +8,16 @@ class HistoricoController {
         case 'create':
             return [
                 body('usuariosId').notEmpty().withMessage('usuariosId é obrigatório'),
+                body('consultaId').notEmpty().withMessage('consultaId é obrigatório'),
+                body('procedimentoId').notEmpty().withMessage('procedimentoId é obrigatório'),
+                body('profissionalId').notEmpty().withMessage('profissionalId é obrigatório'),
             ];
         case 'update':
             return [
                 body('usuariosId').optional().notEmpty().withMessage('usuariosId não pode estar vazio'),
+                body('consultaId').notEmpty().withMessage('consultaId é obrigatório'),
+                body('procedimentoId').notEmpty().withMessage('procedimentoId é obrigatório'),
+                body('profissionalId').notEmpty().withMessage('profissionalId é obrigatório'),
             ];
         }
     }
