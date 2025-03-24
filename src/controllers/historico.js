@@ -12,13 +12,6 @@ class HistoricoController {
                 body('procedimentoId').notEmpty().withMessage('procedimentoId é obrigatório'),
                 body('profissionalId').notEmpty().withMessage('profissionalId é obrigatório'),
             ];
-        case 'update':
-            return [
-                body('usuariosId').optional().notEmpty().withMessage('usuariosId não pode estar vazio'),
-                body('consultaId').notEmpty().withMessage('consultaId é obrigatório'),
-                body('procedimentoId').notEmpty().withMessage('procedimentoId é obrigatório'),
-                body('profissionalId').notEmpty().withMessage('profissionalId é obrigatório'),
-            ];
         }
     }
 
@@ -43,16 +36,6 @@ class HistoricoController {
             return res.status(404).json({ error: 'Histórico não encontrado' });
         }
         res.json(historico);
-    });
-
-    update = asyncHandler(async(req, res) => {
-        const historicoAtualizado = await HistoricoService.update(req.params.id, req.body);
-        res.json(historicoAtualizado);
-    });
-
-    delete = asyncHandler(async(req, res) => {
-        await HistoricoService.delete(req.params.id);
-        res.status(204).send();
     });
 }
 
