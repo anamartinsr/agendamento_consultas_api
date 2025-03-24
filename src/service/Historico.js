@@ -69,24 +69,6 @@ class HistoricoService {
      * @param {Object} dados - Dados atualizados do histórico.
      * @returns {Promise<Object>} - Histórico atualizado.
      */
-    static async update(id, dados) {
-        return prisma.historico.update({
-            where: { id },
-            data: dados,
-        });
-    }
-
-    /**
-     * Deleta um histórico do banco de dados.
-     *
-     * @param {number} id - ID do histórico a ser deletado.
-     * @returns {Promise<Object>} - Histórico deletado.
-     */
-    static async delete(id) {
-        return prisma.historico.delete({
-            where: { id },
-        });
-    }
 }
 
 export default HistoricoService;

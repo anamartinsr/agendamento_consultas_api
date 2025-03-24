@@ -35,27 +35,6 @@ class HistoricoController {
             return res.status(400).json({ error: e.message });
         }
     }
-
-    async update(req, res) {
-        try {
-            const { id } = req.params;
-            const dados = req.body;
-            const historicoAtualizado = await HistoricoService.update(id, dados);
-            return res.json(historicoAtualizado);
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
-        }
-    }
-
-    async delete(req, res) {
-        try {
-            const { id } = req.params;
-            await HistoricoService.delete(id);
-            return res.status(204).send();
-        } catch (e) {
-            return res.status(400).json({ error: e.message });
-        }
-    }
 }
 
 export default new HistoricoController();
