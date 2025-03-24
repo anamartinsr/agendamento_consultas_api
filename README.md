@@ -23,7 +23,6 @@ Uma API construída com **Node.js** para gerenciar cadastro de clientes e profis
 ### Outras Dependências
 - **bcryptjs**: Para hashing de senhas
 - **cors**: Para configurar o acesso CORS
-- **dotenv**: Para gerenciar variáveis de ambiente
 - **jsonwebtoken**: Para autenticação com JWT
 
 ## Estrutura do Projeto
@@ -35,38 +34,6 @@ src/
 ├── middlewares/    
 ├── routes/        
 ```
-
-## Funcionalidades
-
-### 1. Cadastro e Associação
-- **Administrador** cadastra clientes e profissionais.
-- Identificação do tipo de usuário via `tipoUser`.
-
-### 2. Agendamento de Consultas
-- Clientes podem agendar consultas preenchendo um formulário com:
-  - `descricao`
-  - `profissional`
-  - `especialidade`
-  - `procedimento`
-  - `valor`
-  - `data`
-  - `recomendacao`
-
-### 3. Disponibilidade do Profissional
-- Gerenciamento de horários disponíveis.
-- Status `DISPONIVEL` para horários livres e `RESERVADA` para agendamentos confirmados.
-
-### 4. Cancelamento de Consultas
-- Regras de cancelamento:
-  - Cliente: até 2 dias antes.
-  - Profissional: até 4 dias antes.
-- Atualização do status da consulta para `CANCELADA`.
-
-### 5. Histórico de Consultas
-- Visualização do histórico de consultas para clientes e profissionais.
-
-### 6. Perfil do Usuário
-- Edição de informações pessoais de clientes e profissionais.
 
 ## Como Rodar o Projeto
 
@@ -107,6 +74,3 @@ src/
 - `npm run dev`: Inicia o servidor em modo de desenvolvimento com **nodemon**.
 - `npm run lint`: Verifica a formatação do código com **ESLint**.
 - `npm run build`: Compila o código para produção com **Sucrase**.
-
-## Contribuição
-Contribuições são bem-vindas! Por favor, siga as diretrizes do projeto e mantenha a padronização do código utilizando **Husky** e **ESLint**.
