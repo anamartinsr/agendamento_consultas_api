@@ -45,16 +45,16 @@ class App {
     }
 
     routes() {
-        this.app.use('/historico', Historico);
+        this.app.use('/history', Historico);
         this.app.use('/user', User);
         this.app.use('/token', Token);
-        this.app.use('/profissional', Profissional);
-        this.app.use('/procedimento', Procedimento);
-        this.app.use('/disponibilidade', Disponibilidade);
-        this.app.use('/consulta', Consulta);
+        this.app.use('/professional', Profissional);
+        this.app.use('/procedure', Procedimento);
+        this.app.use('/availability', Disponibilidade);
+        this.app.use('/appointment', Consulta);
         this.app.use('/email', Email);
-        this.app.use('/logConsulta', LogConsulta);
-        this.app.use('/profissionalProcedimento', ProfissionalProcedimento);
+        this.app.use('/logAppointment', LogConsulta);
+        this.app.use('/professionalProcedure', ProfissionalProcedimento);
     }
 }
 
