@@ -1,13 +1,6 @@
 import prisma from '../../prisma/index.js';
 
 class ProfissionalProcedimentoService {
-    /**
-     * Cria um novo registro profissionalProcedimento no banco de dados.
-     *
-     * @param {Object} dados - Dados do profissionalProcedimento a ser criado.
-     * @returns {Promise<Object>} - profissionalProcedimento criado.
-     * @throws {Error} - profissional ou procedimento não for encontrado.
-     */
     static async create(dados) {
         const profissionalExistente = await prisma.profissional.findUnique({
             where: {

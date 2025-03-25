@@ -1,13 +1,6 @@
 import prisma from '../../prisma/index.js';
 
 class ConsultaService {
-    /**
-     * Cria uma nova consulta no banco de dados.
-     *
-     * @param {Object} dados - Dados da consulta a ser criada.
-     * @returns {Promise<Object>} - Consulta criada.
-     * @throws {Error} - Se o usuário, profissional ou procedimento não for encontrado.
-     */
     static async create(dados) {
         const userExistente = await prisma.user.findUnique({
             where: {
@@ -44,11 +37,6 @@ class ConsultaService {
         });
     }
 
-    /**
-     * Retorna todas as consultas do banco de dados.
-     *
-     * @returns {Promise<Array>} - Lista de consultas.
-     */
     static async findAll() {
         return prisma.consulta.findMany({
             include: {
@@ -67,12 +55,6 @@ class ConsultaService {
         });
     }
 
-    /**
-     * Retorna uma consulta pelo seu ID.
-     *
-     * @param {number} id - ID da consulta.
-     * @returns {Promise<Object|null>} - Consulta encontrada ou null se não existir.
-     */
     static async findById(id) {
         return prisma.consulta.findUnique({
             where: { id },
@@ -92,26 +74,12 @@ class ConsultaService {
         });
     }
 
-    /**
-     * Atualiza uma consulta existente no banco de dados.
-     *
-     * @param {number} id - ID da consulta a ser atualizada.
-     * @param {Object} dados - Dados atualizados da consulta.
-     * @returns {Promise<Object>} - Consulta atualizada.
-     */
     static async update(id, dados) {
         return prisma.consulta.update({
             where: { id },
             data: dados,
         });
     }
-
-    /**
-     * Deleta uma consulta do banco de dados.
-     *
-     * @param {number} id - ID da consulta a ser deletada.
-     * @returns {Promise<Object>} - Consulta deletada.
-     */
     static async delete(id) {
         return prisma.consulta.delete({
             where: { id },

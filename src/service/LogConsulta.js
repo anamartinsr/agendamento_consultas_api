@@ -1,13 +1,6 @@
 import prisma from '../../prisma/index.js';
 
 class LogService {
-    /**
-     * Cria um novo registro logConsulta no banco de dados.
-     *
-     * @param {Object} dados - Dados da logConsulta a ser criado.
-     * @returns {Promise<Object>} - logConsulta criada.
-     * @throws {Error} - Se o usuário, profissional ou procedimento não for encontrado.
-     */
     static async create(dados) {
         const userExistente = await prisma.user.findUnique({
             where: {

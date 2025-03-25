@@ -13,13 +13,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-/**
- * Envia um e-mail.
- *
- * @param {string} to - Endereço de e-mail do destinatário.
- * @param {string} subject - Assunto do e-mail.
- * @param {string} html - Conteúdo HTML do e-mail.
- */
 const sendEmail = async(to, subject, html) => {
     try {
         const mailOptions = {

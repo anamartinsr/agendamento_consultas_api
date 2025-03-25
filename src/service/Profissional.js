@@ -1,13 +1,6 @@
 import prisma from '../../prisma/index.js';
 
 class ProfissionalService {
-    /**
-     * Cria um novo profissional no banco de dados.
-     *
-     * @param {Object} dados - Dados do profissional a ser criado.
-     * @returns {Promise<Object>} - Profissional criado.
-     * @throws {Error} - Se o usuário não for encontrado ou ocorrer um erro ao criar o profissional.
-     */
     static async create(dados) {
         try {
             const usuarioExistente = await prisma.user.findUnique({
@@ -35,11 +28,6 @@ class ProfissionalService {
         }
     }
 
-    /**
-     * Retorna todos os profissionais do banco de dados.
-     *
-     * @returns {Promise<Array>} - Lista de profissionais.
-     */
     static async findAll() {
         return prisma.profissional.findMany({
             include: {
@@ -48,12 +36,6 @@ class ProfissionalService {
         });
     }
 
-    /**
-     * Retorna um profissional pelo seu ID.
-     *
-     * @param {number} id - ID do profissional.
-     * @returns {Promise<Object|null>} - Profissional encontrado ou null se não existir.
-     */
     static async findById(id) {
         return prisma.profissional.findUnique({
             where: { id },
@@ -63,13 +45,6 @@ class ProfissionalService {
         });
     }
 
-    /**
-     * Atualiza um profissional existente no banco de dados.
-     *
-     * @param {number} id - ID do profissional a ser atualizado.
-     * @param {Object} dados - Dados atualizados do profissional.
-     * @returns {Promise<Object>} - Profissional atualizado.
-     */
     static async update(id, dados) {
         return prisma.profissional.update({
             where: { id },
@@ -77,12 +52,6 @@ class ProfissionalService {
         });
     }
 
-    /**
-     * Deleta um profissional do banco de dados.
-     *
-     * @param {number} id - ID do profissional a ser deletado.
-     * @returns {Promise<Object>} - Profissional deletado.
-     */
     static async delete(id) {
         return prisma.profissional.delete({
             where: { id },
