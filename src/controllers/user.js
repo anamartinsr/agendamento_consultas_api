@@ -19,6 +19,32 @@ class UserController {
     }
 
     create = asyncHandler(async(req, res) => {
+        /*  #swagger.auto = false
+
+ test swagger
+
+        #swagger.path = '/users/{id}'
+        #swagger.method = 'put'
+        #swagger.produces = ['application/json']
+        #swagger.consumes = ['application/json']
+
+        #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'User ID.',
+            required: true,
+            type: 'integer'
+        }
+
+        #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'User data.',
+            required: true,
+            schema: {
+                username: "user",
+                password: "1234"
+            }
+        }
+    */
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });

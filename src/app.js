@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
-import swaggerFile from './swagger-output.json' assert { type: "json" };
+import swaggerFile from './lib/swagger-output.json' assert { type: "json" };
 
 import Historico from './routes/historico.js';
 import Token from './routes/token.js';

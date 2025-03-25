@@ -13,10 +13,10 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = ['./app.js'];
+const endpointsFiles = ['../app.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-    import('./server.js').then(() => {
+    import('../server.js').then(() => {
         console.log('Project root file loaded.');
     });
 });

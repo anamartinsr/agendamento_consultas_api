@@ -63,6 +63,40 @@
       },
       "post": {
         "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID.",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "user"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "1234"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
