@@ -41,7 +41,7 @@ class App {
         this.app.use(express.json());
         this.app.use(cors(corsOptions));
         this.app.use(helmet());
-        this.app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+        this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
     }
 
     routes() {

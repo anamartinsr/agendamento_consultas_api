@@ -357,7 +357,7 @@
         }
       }
     },
-    "/query/": {
+    "/consulta/": {
       "post": {
         "description": "",
         "responses": {
@@ -375,7 +375,7 @@
         }
       }
     },
-    "/query/{id}": {
+    "/consulta/{id}": {
       "get": {
         "description": "",
         "parameters": [
