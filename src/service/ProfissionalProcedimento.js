@@ -1,24 +1,14 @@
 import prisma from '../../prisma/index.js';
 
-class LogService {
+class ProfissionalProcedimentoService {
     /**
-     * Cria um novo registro logConsulta no banco de dados.
+     * Cria um novo registro profissionalProcedimento no banco de dados.
      *
-     * @param {Object} dados - Dados da logConsulta a ser criado.
-     * @returns {Promise<Object>} - logConsulta criada.
-     * @throws {Error} - Se o usuário, profissional ou procedimento não for encontrado.
+     * @param {Object} dados - Dados do profissionalProcedimento a ser criado.
+     * @returns {Promise<Object>} - profissionalProcedimento criado.
+     * @throws {Error} - profissional ou procedimento não for encontrado.
      */
     static async create(dados) {
-        const userExistente = await prisma.user.findUnique({
-            where: {
-                id: dados.usuariosId,
-            },
-        });
-
-        if (!userExistente) {
-            throw new Error('Usuario não encontrado');
-        }
-
         const profissionalExistente = await prisma.profissional.findUnique({
             where: {
                 id: dados.profissionalId,
@@ -39,10 +29,10 @@ class LogService {
             throw new Error('Procedimento não encontrado');
         }
 
-        return prisma.logConsulta.create({
+        return prisma.profissionalProcedimento.create({
             data: dados,
         });
     }
 }
 
-export default LogService;
+export default ProfissionalProcedimentoService;

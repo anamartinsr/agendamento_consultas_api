@@ -22,19 +22,6 @@ class LogConsultaController {
         const novoLog = await LogService.create(req.body);
         res.status(201).json(novoLog);
     });
-
-    // index = asyncHandler(async(req, res) => {
-    //     const LogConsulta = await LogService.findAll();
-    //     res.json(LogConsulta);
-    // });
-
-    // show = asyncHandler(async(req, res) => {
-    //     const logConsulta = await LogService.findById(req.params.id);
-    //     if (!logConsulta) {
-    //         return res.status(404).json({ error: 'Log não encontrado' });
-    //     }
-    //     res.json(logConsulta);
-    // });
 }
 
 export default new LogConsultaController();

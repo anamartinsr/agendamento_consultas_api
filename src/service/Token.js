@@ -1,5 +1,5 @@
 import prisma from '../../prisma/index.js';
-
+import bcrypt from 'bcryptjs';
 class TokenService {
     /**
      * Encontra um usuário pelo CPF.
@@ -22,7 +22,6 @@ class TokenService {
      */
     async isSenhaValid(user, senha) {
         if (!user.cpf || !user.senha) return false;
-        const bcrypt = await import('bcryptjs');
         return bcrypt.compare(senha, user.senha);
     }
 }

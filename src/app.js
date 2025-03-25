@@ -10,6 +10,8 @@ import Procedimento from './routes/procedimento.js';
 import Disponibilidade from './routes/disponibilidade.js';
 import Consulta from './routes/consulta.js';
 import Email from './routes/email.js';
+import LogConsulta from './routes/logConsulta.js';
+import ProfissionalProcedimento from './routes/profissionalProcedimento.js';
 
 const whiteList = [
     process.env.APP_URL_FRONT,
@@ -48,7 +50,8 @@ class App {
         this.app.use('/disponibilidade', Disponibilidade);
         this.app.use('/consulta', Consulta);
         this.app.use('/email', Email);
-
+        this.app.use('/logConsulta', LogConsulta);
+        this.app.use('/profissionalProcedimento', ProfissionalProcedimento);
     }
 }
 

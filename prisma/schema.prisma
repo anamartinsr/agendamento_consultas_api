@@ -30,7 +30,7 @@ model User {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   nome          String
   idade         Int
-  cpf           String       @unique
+  cpf           String        @unique
   email         String        @unique
   senha         String
   tipoUser      TipoUser
@@ -58,6 +58,7 @@ model Profissional {
   consultas                Consulta[]
   disponibilidades         Disponibilidade[]
   ProfissionalProcedimento ProfissionalProcedimento[]
+  Historico                Historico[]
 }
 
 model Procedimento {
@@ -99,7 +100,7 @@ model Consulta {
 }
 
 model Historico {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
   descricao      String
   valor          Float
   data           DateTime
@@ -107,7 +108,8 @@ model Historico {
   consulta       Consulta     @relation(fields: [consultaId], references: [id])
   procedimentoId String       @db.ObjectId
   procedimento   Procedimento @relation(fields: [procedimentoId], references: [id])
-  profissionalId String
+  profissionalId String       @db.ObjectId
+  profissional   Profissional @relation(fields: [profissionalId], references: [id])
   usuariosId     String       @db.ObjectId
   user           User         @relation(fields: [usuariosId], references: [id])
 }
