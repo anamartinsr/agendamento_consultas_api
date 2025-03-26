@@ -54,15 +54,32 @@
     },
     "/user/": {
       "get": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "summary": "List all user",
+        "description": "This endpoint will list all users",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "List of users"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a new user",
+        "description": "This endpoint will create a new user",
         "consumes": [
           "application/json"
         ],
@@ -71,13 +88,6 @@
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "User ID.",
-            "required": true,
-            "type": "integer"
-          },
-          {
             "name": "body",
             "in": "body",
             "description": "User data.",
@@ -85,28 +95,85 @@
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
+                "name": {
                   "type": "string",
                   "example": "user"
+                },
+                "idade": {
+                  "type": "number",
+                  "example": 18
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "xxx-xxx-xxx-xx"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "user@example.com"
                 },
                 "password": {
                   "type": "string",
                   "example": "1234"
+                },
+                "tipoUser": {
+                  "type": "string",
+                  "example": "CLIENTE"
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "appointments"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "xxxxx-xxx"
+                },
+                "numero": {
+                  "type": "number",
+                  "example": 10
+                },
+                "rua": {
+                  "type": "string",
+                  "example": "Rua XYZ"
+                },
+                "cidade": {
+                  "type": "string",
+                  "example": "Cidade ABC"
+                },
+                "telefone": {
+                  "type": "string",
+                  "example": "xx-xxxxx-xxxx"
+                },
+                "senhaAlterada": {
+                  "type": "string",
+                  "example": "false"
                 }
               }
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "User registered successfully."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/user/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "summary": "List a user",
+        "description": "This endpoint will list a users",
         "parameters": [
           {
             "name": "id",
@@ -116,8 +183,17 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "List of user"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
