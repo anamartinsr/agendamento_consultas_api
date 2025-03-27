@@ -198,23 +198,115 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a user",
+        "description": "This endpoint will update a user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "user"
+                },
+                "idade": {
+                  "type": "number",
+                  "example": 18
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "xxx-xxx-xxx-xx"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "user@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "1234"
+                },
+                "tipoUser": {
+                  "type": "string",
+                  "example": "CLIENTE"
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "appointments"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "xxxxx-xxx"
+                },
+                "numero": {
+                  "type": "number",
+                  "example": 10
+                },
+                "rua": {
+                  "type": "string",
+                  "example": "Rua XYZ"
+                },
+                "cidade": {
+                  "type": "string",
+                  "example": "Cidade ABC"
+                },
+                "telefone": {
+                  "type": "string",
+                  "example": "xx-xxxxx-xxxx"
+                },
+                "senhaAlterada": {
+                  "type": "string",
+                  "example": "false"
+                }
+              }
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Update of user"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user",
+        "description": "This endpoint will delete a user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -224,8 +316,17 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Delete of user"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

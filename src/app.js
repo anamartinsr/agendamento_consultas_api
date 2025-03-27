@@ -12,7 +12,6 @@ import Procedimento from './routes/procedimento.js';
 import Disponibilidade from './routes/disponibilidade.js';
 import Consulta from './routes/consulta.js';
 import Email from './routes/email.js';
-import LogConsulta from './routes/logConsulta.js';
 import ProfissionalProcedimento from './routes/profissionalProcedimento.js';
 
 const whiteList = [
@@ -53,7 +52,6 @@ class App {
         this.app.use('/availability', Disponibilidade);
         this.app.use('/appointment', Consulta);
         this.app.use('/email', Email);
-        this.app.use('/logAppointment', LogConsulta);
         this.app.use('/professionalProcedure', ProfissionalProcedimento);
     }
 }
