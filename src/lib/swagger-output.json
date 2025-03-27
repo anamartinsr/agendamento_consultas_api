@@ -344,7 +344,7 @@
                 "cpf": {
                   "example": "any"
                 },
-                "senha": {
+                "password": {
                   "example": "any"
                 }
               }
@@ -668,16 +668,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/logAppointment/": {
-      "post": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }

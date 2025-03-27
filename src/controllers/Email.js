@@ -1,6 +1,6 @@
 import { sendEmail } from '../service/Email.js';
 
-const sendTestEmail = async(req, res) => {
+const sendEmailController = async(req, res) => {
     const { to, subject, html } = req.body;
 
     if (!to || !subject || !html) {
@@ -15,4 +15,4 @@ const sendTestEmail = async(req, res) => {
     }
 };
 
-export { sendTestEmail };
+export { sendEmailController };

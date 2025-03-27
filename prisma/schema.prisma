@@ -43,40 +43,40 @@ model User {
   Professional    Professional[]
 }
 
-model Address {
-  zip_code        String
-  number          String
-  street          String
-  city            String
+type Address {
+  zip_code String
+  number   String
+  street   String
+  city     String
 }
 
 model Professional {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  specialty     String
-  userId        String         @unique @db.ObjectId
-  user          User           @relation(fields: [userId], references: [id])
-  appointment   Appointment[]
-  availability  Availability[]
-  history       History[]
+  id                     String                  @id @default(auto()) @map("_id") @db.ObjectId
+  specialty              String
+  userId                 String                  @unique @db.ObjectId
+  user                   User                    @relation(fields: [userId], references: [id])
+  appointment            Appointment[]
+  availability           Availability[]
+  history                History[]
   professionalProcedures ProfessionalProcedure[]
 }
 
 model Procedure {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  price         Float
-  recommendation String
-  appointment   Appointment[]
-  history       History[]
+  id                     String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name                   String
+  price                  Float
+  recommendation         String
+  appointment            Appointment[]
+  history                History[]
   professionalProcedures ProfessionalProcedure[]
 }
 
 model ProfessionalProcedure {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  professionalId String        @db.ObjectId
-  procedureId   String        @db.ObjectId
-  professional  Professional   @relation(fields: [professionalId], references: [id])
-  procedure     Procedure      @relation(fields: [procedureId], references: [id])
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  professionalId String       @db.ObjectId
+  procedureId    String       @db.ObjectId
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  procedure      Procedure    @relation(fields: [procedureId], references: [id])
 }
 
 model Availability {
@@ -116,5 +116,3 @@ model History {
   userId         String       @db.ObjectId
   user           User         @relation(fields: [userId], references: [id])
 }
-
-

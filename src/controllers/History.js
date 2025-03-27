@@ -1,6 +1,6 @@
 import { validationResult, body } from 'express-validator';
 import asyncHandler from 'express-async-handler';
-import HistoricoService from '../service/Historico.js';
+import HistoricoService from '../service/History.js';
 
 class HistoricoController {
     validate(method) {

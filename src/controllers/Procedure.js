@@ -1,6 +1,6 @@
 import { validationResult, body } from 'express-validator';
 import asyncHandler from 'express-async-handler';
-import ProcedimentoService from '../service/Procedimento.js';
+import ProcedimentoService from '../service/Procedure.js';
 
 class ProcedimentoController {
     validate(method) {

@@ -4,15 +4,15 @@ import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
 import swaggerFile from './lib/swagger-output.json' assert { type: "json" };
 
-import Historico from './routes/historico.js';
+import History from './routes/history.js';
 import Token from './routes/token.js';
 import User from './routes/user.js';
-import Profissional from './routes/profissional.js';
-import Procedimento from './routes/procedimento.js';
-import Disponibilidade from './routes/disponibilidade.js';
-import Consulta from './routes/consulta.js';
+import Professional from './routes/professional.js';
+import Procedure from './routes/procedure.js';
+import Availability from './routes/availability.js';
+import Appointment from './routes/appointment.js';
 import Email from './routes/email.js';
-import ProfissionalProcedimento from './routes/profissionalProcedimento.js';
+import ProfessionalProcedure from './routes/professionalProcedure.js';
 
 const whiteList = [
     process.env.APP_URL_FRONT,
@@ -44,15 +44,15 @@ class App {
     }
 
     routes() {
-        this.app.use('/history', Historico);
+        this.app.use('/history', History);
         this.app.use('/user', User);
         this.app.use('/token', Token);
-        this.app.use('/professional', Profissional);
-        this.app.use('/procedure', Procedimento);
-        this.app.use('/availability', Disponibilidade);
-        this.app.use('/appointment', Consulta);
+        this.app.use('/professional', Professional);
+        this.app.use('/procedure', Procedure);
+        this.app.use('/availability', Availability);
+        this.app.use('/appointment', Appointment);
         this.app.use('/email', Email);
-        this.app.use('/professionalProcedure', ProfissionalProcedimento);
+        this.app.use('/professionalProcedure', ProfessionalProcedure);
     }
 }
 

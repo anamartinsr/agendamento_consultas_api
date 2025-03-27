@@ -1,6 +1,6 @@
 import { check, validationResult } from 'express-validator';
 import asyncHandler from 'express-async-handler';
-import DisponibilidadeService from '../service/Disponibilidade.js';
+import DisponibilidadeService from '../service/Availability.js';
 
 class DisponibilidadeController {
     validate(method) {

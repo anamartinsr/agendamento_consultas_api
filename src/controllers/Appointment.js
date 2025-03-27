@@ -1,4 +1,4 @@
-import ConsultaService from '../service/Consulta.js';
+import ConsultaService from '../service/Appointment.js';
 import { validationResult, body } from 'express-validator';
 import asyncHandler from 'express-async-handler';
 

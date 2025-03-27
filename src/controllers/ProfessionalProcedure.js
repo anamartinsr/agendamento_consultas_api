@@ -1,6 +1,6 @@
 import { validationResult, body } from 'express-validator';
 import asyncHandler from 'express-async-handler';
-import ProfissonalProcedimentoService from '../service/ProfissionalProcedimento.js';
+import ProfissonalProcedimentoService from '../service/ProfessionalProcedure.js';
 
 class ProfissionalProcedimentoController {
     validate(method) {
