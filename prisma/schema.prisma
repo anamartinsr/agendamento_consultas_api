@@ -14,106 +14,107 @@ generator client {
 }
 
 enum TypeUser {
-  CLIENTE
+  CLIENT
   ADMIN
-  PROFISSIONAL
+  PROFESSIONAL
 }
 
 enum Status {
-  RESERVADA
-  CANCELADA
-  CONCLUIDA
-  DISPONIVEL
+  RESERVED
+  CANCELLED
+  COMPLETED
+  AVAILABLE
 }
 
 model User {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  dt_birth        DateTime
+  cpf             String         @unique
+  email           String         @unique
+  password        String
+  typeUser        TypeUser
+  description     String?
+  address         Address
+  phone           String
+  passwordChanged Boolean        @default(false)
+  Appointment     Appointment[]
+  History         History[]
+  Professional    Professional[]
+}
+
+model Address {
+  zip_code        String
+  number          String
+  street          String
+  city            String
+}
+
+model Professional {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  specialty     String
+  userId        String         @unique @db.ObjectId
+  user          User           @relation(fields: [userId], references: [id])
+  appointment   Appointment[]
+  availability  Availability[]
+  history       History[]
+  professionalProcedures ProfessionalProcedure[]
+}
+
+model Procedure {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  dt_birth      Date
-  cpf           String        @unique
-  email         String        @unique
-  password      String
-  typeUser      TypeUser
-  description   String?
-  zip_code      String
-  number        String
-  street        String
-  city          String
-  phone         String
-  consulta      Consulta[]
-  historico     Historico[]
-  profissional  Profissional?
-  passwordChanged Boolean       @default(false)
-  LogConsulta LogConsulta[]
+  price         Float
+  recommendation String
+  appointment   Appointment[]
+  history       History[]
+  professionalProcedures ProfessionalProcedure[]
 }
 
-model Profissional {
-  id                       String                     @id @default(auto()) @map("_id") @db.ObjectId
-  specialty                String
-  userId                   String                     @unique @db.ObjectId
-  user                     User                       @relation(fields: [usuarioId], references: [id])
-  procedimentos            Procedimento[]
-  consultas                Consulta[]
-  disponibilidades         Disponibilidade[]
-  ProfissionalProcedimento ProfissionalProcedimento[]
-  Historico                Historico[]
+model ProfessionalProcedure {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  professionalId String        @db.ObjectId
+  procedureId   String        @db.ObjectId
+  professional  Professional   @relation(fields: [professionalId], references: [id])
+  procedure     Procedure      @relation(fields: [procedureId], references: [id])
 }
 
-model Procedimento {
-  id                       String                     @id @default(auto()) @map("_id") @db.ObjectId
-  name                     String
-  price                    Float
-  recommendation           String
-  profissionalId           String                     @db.ObjectId
-  profissional             Profissional               @relation(fields: [profissionalId], references: [id])
-  consultas                Consulta[]
-  Historico                Historico[]
-  ProfissionalProcedimento ProfissionalProcedimento[]
-}
-
-model Disponibilidade {
+model Availability {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  profissionalId String       @db.ObjectId
-  profissional   Profissional @relation(fields: [profissionalId], references: [id])
+  professionalId String       @db.ObjectId
+  professional   Professional @relation(fields: [professionalId], references: [id])
   date           DateTime
-  time        String
-  status         Status       @default(DISPONIVEL)
+  time           String
+  status         Status       @default(AVAILABLE)
 }
 
-model Consulta {
-  id                  String        @id @default(auto()) @map("_id") @db.ObjectId
-  description           String
-  status              Status
-  date                DateTime
-  isDeleted           Boolean       @default(false)
-  usuariosId          String        @db.ObjectId
-  user                User          @relation(fields: [usuariosId], references: [id])
-  profissionalId      String        @db.ObjectId
-  profissional        Profissional  @relation(fields: [profissionalId], references: [id])
-  procedimentoId      String        @db.ObjectId
-  procedimento        Procedimento  @relation(fields: [procedimentoId], references: [id])
-  dateStatusChange DateTime?     @default(now())
-  Historico           Historico[]
-  LogConsulta         LogConsulta[]
+model Appointment {
+  id               String       @id @default(auto()) @map("_id") @db.ObjectId
+  description      String
+  status           Status
+  date             DateTime
+  isDeleted        Boolean      @default(false)
+  userId           String       @db.ObjectId
+  user             User         @relation(fields: [userId], references: [id])
+  professionalId   String       @db.ObjectId
+  professional     Professional @relation(fields: [professionalId], references: [id])
+  procedureId      String       @db.ObjectId
+  procedure        Procedure    @relation(fields: [procedureId], references: [id])
+  dateStatusChange DateTime?    @default(now())
+  History          History[]
 }
 
-model Historico {
+model History {
   id             String       @id @default(auto()) @map("_id") @db.ObjectId
   date           DateTime
-  consultaId     String       @db.ObjectId
-  consulta       Consulta     @relation(fields: [consultaId], references: [id])
-  procedimentoId String       @db.ObjectId
-  procedimento   Procedimento @relation(fields: [procedimentoId], references: [id])
-  profissionalId String       @db.ObjectId
-  profissional   Profissional @relation(fields: [profissionalId], references: [id])
-  usuariosId     String       @db.ObjectId
-  user           User         @relation(fields: [usuariosId], references: [id])
+  appointmentId  String       @db.ObjectId
+  appointment    Appointment  @relation(fields: [appointmentId], references: [id])
+  procedureId    String       @db.ObjectId
+  procedure      Procedure    @relation(fields: [procedureId], references: [id])
+  professionalId String       @db.ObjectId
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  userId         String       @db.ObjectId
+  user           User         @relation(fields: [userId], references: [id])
 }
 
-model ProfissionalProcedimento {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  profissionalId String       @db.ObjectId
-  procedimentoId String       @db.ObjectId
-  profissional   Profissional @relation(fields: [profissionalId], references: [id])
-  procedimento   Procedimento @relation(fields: [procedimentoId], references: [id])
-}
+

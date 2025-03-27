@@ -1,8 +1,28 @@
 import prisma from '../../prisma/index.js';
-
+import bcrypt from 'bcrypt';
 class UserService {
     static async create(dados) {
-        return prisma.user.create({ data: dados });
+        const SALT_ROUNDS = 10;
+        async function hashPassword(password) {
+            return await bcrypt.hash(password, SALT_ROUNDS);
+        }
+
+        const hashedPassword = await hashPassword(dados.password);
+
+        return prisma.user.create({
+            data: {
+                name: dados.name,
+                dt_birth: dados.dt_birth,
+                email: dados.email,
+                cpf: dados.cpf,
+                phone: dados.phone,
+                typeUser: dados.typeUser,
+                description: dados.description,
+                address: dados.address,
+                passwordChanged: dados.passwordChanged,
+                password: hashedPassword,
+            },
+        });
     }
 
     static async findAll() {
