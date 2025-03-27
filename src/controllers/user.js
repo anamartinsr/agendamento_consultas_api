@@ -7,13 +7,13 @@ class UserController {
         switch (method) {
         case 'create':
             return [
-                body('email').isEmail().withMessage('Email inválido'),
-                body('password').notEmpty().withMessage('Password é obrigatório'),
+                body('email').isEmail().withMessage('Email invalid'),
+                body('password').notEmpty().withMessage('Password is mandatory'),
             ];
         case 'update':
             return [
-                body('email').optional().isEmail().withMessage('Email inválido'),
-                body('password').optional().notEmpty().withMessage('Password não pode estar vazio'),
+                body('email').optional().isEmail().withMessage('Email invalid'),
+                body('password').optional().notEmpty().withMessage('Password is mandatory'),
             ];
         }
     }
@@ -54,9 +54,9 @@ class UserController {
             // #swagger.responses[500] = { description: ''}
         }
 
-        const novoUser = await UserService.create(req.body);
+        const newUser = await UserService.create(req.body);
         // #swagger.responses[201] = { description: 'User registered successfully.' }
-        res.status(201).json(novoUser);
+        res.status(201).json(newUser);
     });
 
     index = asyncHandler(async(req, res) => {
@@ -81,7 +81,7 @@ class UserController {
         #swagger.method = 'get' */
         const user = await UserService.findById(req.params.id);
         if (!user) {
-            return res.status(404).json({ error: 'User não encontrado' });
+            return res.status(404).json({ error: 'User not found' });
         }
         // #swagger.responses[200] = { description: 'List of user' }
         // #swagger.responses[400] = { description: ''}
@@ -118,12 +118,12 @@ class UserController {
             senhaAlterada: "false",
         }
     } */
-        const userAtualizado = await UserService.update(req.params.id, req.body);
+        const userUpdated = await UserService.update(req.params.id, req.body);
         // #swagger.responses[200] = { description: 'Update of user' }
         // #swagger.responses[400] = { description: ''}
         // #swagger.responses[404] = { description: ''}
         // #swagger.responses[500] = { description: ''}
-        res.json(userAtualizado);
+        res.json(userUpdated);
     });
 
     delete = asyncHandler(async(req, res) => {

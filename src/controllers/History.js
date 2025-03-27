@@ -1,16 +1,16 @@
 import { validationResult, body } from 'express-validator';
 import asyncHandler from 'express-async-handler';
-import HistoricoService from '../service/History.js';
+import HistoryService from '../service/History.js';
 
-class HistoricoController {
+class HistoryController {
     validate(method) {
         switch (method) {
         case 'create':
             return [
-                body('usuariosId').notEmpty().withMessage('usuariosId é obrigatório'),
-                body('consultaId').notEmpty().withMessage('consultaId é obrigatório'),
-                body('procedimentoId').notEmpty().withMessage('procedimentoId é obrigatório'),
-                body('profissionalId').notEmpty().withMessage('profissionalId é obrigatório'),
+                body('userId').notEmpty().withMessage('userId is mandatory'),
+                body('appointmentId').notEmpty().withMessage('appointmentId is mandatory'),
+                body('procedureId').notEmpty().withMessage('procedureId is mandatory'),
+                body('professionalId').notEmpty().withMessage('professionalId is mandatory'),
             ];
         }
     }
@@ -21,22 +21,22 @@ class HistoricoController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const novoHistorico = await HistoricoService.create(req.body);
-        res.status(201).json(novoHistorico);
+        const newHistory = await HistoryService.create(req.body);
+        res.status(201).json(newHistory);
     });
 
     index = asyncHandler(async(req, res) => {
-        const historicos = await HistoricoService.findAll();
-        res.json(historicos);
+        const histories = await HistoryService.findAll();
+        res.json(histories);
     });
 
     show = asyncHandler(async(req, res) => {
-        const historico = await HistoricoService.findById(req.params.id);
-        if (!historico) {
-            return res.status(404).json({ error: 'Histórico não encontrado' });
+        const history = await HistoryService.findById(req.params.id);
+        if (!history) {
+            return res.status(404).json({ error: 'History not found' });
         }
-        res.json(historico);
+        res.json(history);
     });
 }
 
-export default new HistoricoController();
+export default new HistoryController();

@@ -1,35 +1,35 @@
 import prisma from '../../prisma/index.js';
 
-class ProfissionalService {
+class ProfessionalService {
     static async create(dados) {
         try {
-            const usuarioExistente = await prisma.user.findUnique({
+            const userExisting = await prisma.user.findUnique({
                 where: {
-                    id: dados.usuarioId,
+                    id: dados.userId,
                 },
             });
 
-            if (!usuarioExistente) {
-                throw new Error('Usuário não encontrado');
+            if (!userExisting) {
+                throw new Error('User not found');
             }
 
-            const profissionalCriado = await prisma.profissional.create({
+            const professional = await prisma.professional.create({
                 data: {
-                    especialidade: dados.especialidade,
+                    specialty: dados.specialty,
                     user: {
-                        connect: { id: dados.usuarioId },
+                        connect: { id: dados.userId },
                     },
                 },
             });
 
-            return profissionalCriado;
+            return professional;
         } catch (e) {
-            throw new Error(`Erro ao criar profissional: ${e.message}`);
+            throw new Error(`Error creating professional: ${e.message}`);
         }
     }
 
     static async findAll() {
-        return prisma.profissional.findMany({
+        return prisma.professional.findMany({
             include: {
                 user: true,
             },
@@ -37,7 +37,7 @@ class ProfissionalService {
     }
 
     static async findById(id) {
-        return prisma.profissional.findUnique({
+        return prisma.professional.findUnique({
             where: { id },
             include: {
                 user: true,
@@ -46,17 +46,17 @@ class ProfissionalService {
     }
 
     static async update(id, dados) {
-        return prisma.profissional.update({
+        return prisma.professional.update({
             where: { id },
             data: dados,
         });
     }
 
     static async delete(id) {
-        return prisma.profissional.delete({
+        return prisma.professional.delete({
             where: { id },
         });
     }
 }
 
-export default ProfissionalService;
+export default ProfessionalService;

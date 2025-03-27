@@ -1,29 +1,29 @@
 import prisma from '../../prisma/index.js';
 
-class ProcedimentoService {
+class ProcedureService {
     static async create(dados) {
-        const profissionalExistente = await prisma.profissional.findUnique({
+        const professionalExisting = await prisma.professional.findUnique({
             where: {
-                id: dados.profissionalId,
+                id: dados.professionalId,
             },
         });
 
-        if (!profissionalExistente) {
-            throw new Error('Profissional não encontrado');
+        if (!professionalExisting) {
+            throw new Error('Professional not found');
         }
 
-        return prisma.procedimento.create({
+        return prisma.procedure.create({
             data: dados,
         });
     }
     static async findAll() {
-        return prisma.procedimento.findMany({
+        return prisma.procedure.findMany({
             include: {
-                profissional: {
+                professional: {
                     include: {
                         user: {
                             select: {
-                                nome: true,
+                                name: true,
                                 email: true,
                             },
                         },
@@ -33,14 +33,14 @@ class ProcedimentoService {
         });
     }
     static async findById(id) {
-        return prisma.procedimento.findUnique({
+        return prisma.procedure.findUnique({
             where: { id },
             include: {
-                profissional: {
+                professional: {
                     include: {
                         user: {
                             select: {
-                                nome: true,
+                                name: true,
                                 email: true,
                             },
                         },
@@ -51,16 +51,16 @@ class ProcedimentoService {
     }
 
     static async update(id, dados) {
-        return prisma.procedimento.update({
+        return prisma.procedure.update({
             where: { id },
             data: dados,
         });
     }
     static async delete(id) {
-        return prisma.procedimento.delete({
+        return prisma.procedure.delete({
             where: { id },
         });
     }
 }
 
-export default ProcedimentoService;
+export default ProcedureService;

@@ -10,7 +10,7 @@ class TokenController {
 
         if (!cpf || !password) {
             return res.status(401).json({
-                errors: ['Credenciais inválidas'],
+                errors: ['Invalid credentials'],
             });
         }
 
@@ -19,7 +19,7 @@ class TokenController {
 
             if (!user || !(await TokenService.isPasswordValid(password, user.password))) {
                 return res.status(401).json({
-                    errors: ['Usuário ou senha inválidos'],
+                    errors: ['Invalid username or password'],
                 });
             }
 
@@ -32,7 +32,7 @@ class TokenController {
         } catch (error) {
             console.error(error);
             return res.status(500).json({
-                errors: ['Erro interno no servidor'],
+                errors: ['Internal server error'],
             });
         }
     }

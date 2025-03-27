@@ -1,31 +1,31 @@
 import prisma from '../../prisma/index.js';
 
-class ProfissionalProcedimentoService {
+class ProfessionalProcedureService {
     static async create(dados) {
-        const profissionalExistente = await prisma.profissional.findUnique({
+        const professionalExisting = await prisma.professional.findUnique({
             where: {
-                id: dados.profissionalId,
+                id: dados.professionalId,
             },
         });
 
-        if (!profissionalExistente) {
-            throw new Error('Profissional não encontrado');
+        if (!professionalExisting) {
+            throw new Error('Professional not found');
         }
 
-        const procedimentoExistente = await prisma.procedimento.findUnique({
+        const procedureExisting = await prisma.procedure.findUnique({
             where: {
-                id: dados.procedimentoId,
+                id: dados.procedureId,
             },
         });
 
-        if (!procedimentoExistente) {
-            throw new Error('Procedimento não encontrado');
+        if (!procedureExisting) {
+            throw new Error('Procedure not found');
         }
 
-        return prisma.profissionalProcedimento.create({
+        return prisma.professionalProcedure.create({
             data: dados,
         });
     }
 }
 
-export default ProfissionalProcedimentoService;
+export default ProfessionalProcedureService;

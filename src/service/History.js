@@ -1,53 +1,51 @@
 import prisma from '../../prisma/index.js';
 
-class HistoricoService {
+class HistoryService {
     static async create(dados) {
-        const userExistente = await prisma.user.findUnique({
+        const userExisting = await prisma.user.findUnique({
             where: {
-                id: dados.usuariosId,
+                id: dados.userId,
             },
         });
 
-        if (!userExistente) {
-            throw new Error('Usuário não encontrado');
+        if (!userExisting) {
+            throw new Error('User not found');
         }
 
-        return prisma.historico.create({
+        return prisma.history.create({
             data: dados,
         });
     }
 
     static async findAll() {
-        return prisma.historico.findMany({
+        return prisma.history.findMany({
             include: {
                 user: {
                     select: {
-                        nome: true,
+                        name: true,
                         email: true,
                     },
                 },
-                consulta: {
+                appointment: {
                     select: {
-                        descricao: true,
+                        description: true,
                         status: true,
-                        data: true,
-                        dataStatusAlteracao: true,
-                        isDeleted: true,
+                        date: true,
                     },
                 },
-                procedimento: {
+                procedure: {
                     select: {
-                        nome: true,
-                        valor: true,
-                        recomendacao: true,
+                        name: true,
+                        price: true,
+                        recommendation: true,
                     },
                 },
-                profissional: {
+                professional: {
                     select: {
-                        especialidade: true,
+                        specialty: true,
                         user: {
                             select: {
-                                nome: true,
+                                name: true,
                                 email: true,
 
                             },
@@ -58,37 +56,35 @@ class HistoricoService {
         });
     }
     static async findById(id) {
-        return prisma.historico.findUnique({
+        return prisma.history.findUnique({
             where: { id },
             include: {
                 user: {
                     select: {
-                        nome: true,
+                        name: true,
                         email: true,
                     },
                 },
-                consulta: {
+                appointment: {
                     select: {
-                        descricao: true,
+                        description: true,
                         status: true,
-                        data: true,
-                        dataStatusAlteracao: true,
-                        isDeleted: true,
+                        date: true,
                     },
                 },
-                procedimento: {
+                procedure: {
                     select: {
-                        nome: true,
-                        valor: true,
-                        recomendacao: true,
+                        name: true,
+                        price: true,
+                        recommendation: true,
                     },
                 },
-                profissional: {
+                professional: {
                     select: {
-                        especialidade: true,
+                        specialty: true,
                         user: {
                             select: {
-                                nome: true,
+                                name: true,
                                 email: true,
 
                             },
@@ -100,4 +96,4 @@ class HistoricoService {
     }
 }
 
-export default HistoricoService;
+export default HistoryService;

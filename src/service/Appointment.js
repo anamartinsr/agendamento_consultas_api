@@ -1,69 +1,69 @@
 import prisma from '../../prisma/index.js';
 
-class ConsultaService {
+class AppointmentService {
     static async create(dados) {
-        const userExistente = await prisma.user.findUnique({
+        const userExisting = await prisma.user.findUnique({
             where: {
-                id: dados.usuariosId,
+                id: dados.userId,
             },
         });
 
-        if (!userExistente) {
-            throw new Error('Usuario não encontrado');
+        if (!userExisting) {
+            throw new Error('User not found');
         }
 
-        const profissionalExistente = await prisma.profissional.findUnique({
+        const professionalExisting = await prisma.professional.findUnique({
             where: {
-                id: dados.profissionalId,
+                id: dados.professionalId,
             },
         });
 
-        if (!profissionalExistente) {
-            throw new Error('Profissional não encontrado');
+        if (!professionalExisting) {
+            throw new Error('Professional not found');
         }
 
-        const procedimentoExistente = await prisma.procedimento.findUnique({
+        const procedureExisting = await prisma.procedure.findUnique({
             where: {
                 id: dados.procedimentoId,
             },
         });
 
-        if (!procedimentoExistente) {
-            throw new Error('Procedimento não encontrado');
+        if (!procedureExisting) {
+            throw new Error('Procedure not found');
         }
 
-        return prisma.consulta.create({
+        return prisma.appointment.create({
             data: dados,
         });
     }
 
     static async findAll() {
-        return prisma.consulta.findMany({
+        return prisma.appointment.findMany({
             include: {
-                profissional: {
+                professional: {
                     include: {
                         user: {
                             select: {
-                                nome: true,
+                                name: true,
                                 email: true,
                             },
                         },
                     },
                 },
-                procedimento: true,
+                procedure: true,
             },
         });
     }
 
     static async findById(id) {
-        return prisma.consulta.findUnique({
+        return prisma.appointment.findUnique({
             where: { id },
             include: {
-                profissional: {
+                professional: {
                     include: {
                         user: {
                             select: {
-                                nome: true,
+                                name: true,
                                 email: true,
                             },
                         },
@@ -75,16 +75,16 @@ class ConsultaService {
     }
 
     static async update(id, dados) {
-        return prisma.consulta.update({
+        return prisma.appointment.update({
             where: { id },
             data: dados,
         });
     }
     static async delete(id) {
-        return prisma.consulta.delete({
+        return prisma.appointment.delete({
             where: { id },
         });
     }
 }
 
-export default ConsultaService;
+export default AppointmentService;
