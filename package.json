@@ -39,6 +39,7 @@
     "nodemailer": "^6.10.0",
     "prisma": "^6.5.0",
     "sequelize": "^6.37.5",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }
 }

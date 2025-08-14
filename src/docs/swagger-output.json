@@ -16,38 +16,84 @@
     "http"
   ],
   "paths": {
-    "/history/": {
-      "post": {
-        "description": "",
+"/history/": {
+      "get": {
+        "tags": ["History"],
+        "summary": "Retrieve all history records",
+        "description": "Returns a list of all history records in the system.",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "List of history records retrieved successfully",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/History"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
-      "get": {
-        "description": "",
+      "post": {
+        "tags": ["History"],
+        "summary": "Create a new history record",
+        "description": "Creates a new history record with the provided data.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "History record to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HistoryInput"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "History record created successfully",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
     "/history/{id}": {
       "get": {
-        "description": "",
+        "tags": ["History"],
+        "summary": "Retrieve a history record by ID",
+        "description": "Returns a single history record identified by its unique ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "Unique identifier of the history record (UUID)",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "History record retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/History"
+            }
+          },
+          "404": {
+            "description": "History record not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -99,9 +145,9 @@
                   "type": "string",
                   "example": "user"
                 },
-                "idade": {
+                "dt_birth": {
                   "type": "number",
-                  "example": 18
+                  "example": "2025-01-07"
                 },
                 "cpf": {
                   "type": "string",
@@ -115,35 +161,39 @@
                   "type": "string",
                   "example": "1234"
                 },
-                "tipoUser": {
+                "typeUser": {
                   "type": "string",
                   "example": "CLIENTE"
                 },
-                "descricao": {
+                "description": {
                   "type": "string",
                   "example": "appointments"
                 },
-                "cep": {
+                "address": {
                   "type": "string",
                   "example": "xxxxx-xxx"
                 },
-                "numero": {
-                  "type": "number",
-                  "example": 10
-                },
-                "rua": {
+                "zip_code": {
                   "type": "string",
-                  "example": "Rua XYZ"
+                  "example": "434343424"
                 },
-                "cidade": {
+                "number": {
                   "type": "string",
-                  "example": "Cidade ABC"
+                  "example": "323"
                 },
-                "telefone": {
+                "street": {
                   "type": "string",
-                  "example": "xx-xxxxx-xxxx"
+                  "example": "name street"
                 },
-                "senhaAlterada": {
+                "city": {
+                  "type": "string",
+                  "example": "ny"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "23232323232"
+                },
+                "passwordChanged": {
                   "type": "string",
                   "example": "false"
                 }
@@ -331,21 +381,35 @@
         }
       }
     },
-    "/token/": {
+    "/tokens/": {
       "post": {
-        "description": "",
+        "tags": [
+          "Token"
+        ],
+        "summary": "Create a new tokens",
+        "description": "This endpoint will create a new token",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "description": "token data.",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "cpf": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "xxx-xxx-xxx-xx"
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "1234"
                 }
               }
             }
@@ -355,8 +419,17 @@
           "200": {
             "description": "OK"
           },
+          "201": {
+            "description": "Token generated successfully."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -638,22 +711,37 @@
     },
     "/email/": {
       "post": {
-        "description": "",
+        "tags": [
+          "Email"
+        ],
+        "summary": "Create a new email",
+        "description": "This endpoint will create a new email",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "description": "email data.",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "to": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "to"
                 },
                 "subject": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "subject"
                 },
                 "html": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "html"
                 }
               }
             }
@@ -663,8 +751,14 @@
           "200": {
             "description": "OK"
           },
+          "201": {
+            "description": "email send successfully."
+          },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -674,10 +768,50 @@
     },
     "/professionalProcedure/": {
       "post": {
-        "description": "",
+        "tags": [
+          "ProfessionalProcedure"
+        ],
+        "summary": "Create a new association ProfessionalProcedure",
+        "description": "This endpoint will create a new association ProfessionalProcedure",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Professional and Procedure data.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "professionalId": {
+                  "type": "number",
+                  "example": 23423423434324
+                },
+                "procedureId": {
+                  "type": "number",
+                  "example": 2342434234324
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Association ProfessionalProcedure generated successfully."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
