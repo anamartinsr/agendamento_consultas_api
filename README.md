@@ -86,21 +86,4 @@ Com o crescimento do projeto e a necessidade de alinhar com boas práticas de me
 
 ---
 
-## Critérios de Aceitação
-- API documentada em `/docs` via Swagger
-- Autenticação segura com refresh tokens rotacionados
-- Nenhum agendamento em sobreposição permitido
-- Todas as rotas com validação de entrada (Zod)
-- Testes automatizados cobrindo casos críticos
-- Build e execução via Docker funcionando (`docker-compose up`)
-- CI rodando lint e testes em cada PR
 
----
-
-## Próximos Passos
-- Definir banco de dados final (Postgres recomendado)
-- Ajustar schema Prisma inicial
-- Refatorar autenticação e rotas principais
-- Configurar documentação Swagger
-- Implementar testes básicos
-- Subir versão refatorada para branch `refactor/arch-agenda`
