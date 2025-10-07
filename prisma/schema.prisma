@@ -1,116 +1,155 @@
-// This isyourPrismaschemafile,
-//learnmoreaboutitinthedocs: https://pris.ly/d/prisma-schema
+// schema.prisma
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-enum TypeUser {
-  CLIENT
-  ADMIN
-  PROFESSIONAL
-}
-
-enum Status {
-  RESERVED
-  CANCELLED
-  COMPLETED
-  AVAILABLE
-}
-
 model User {
-  id              String         @id @default(auto()) @map("_id") @db.ObjectId
-  name            String
-  dt_birth        String
-  cpf             String         @unique
-  email           String         @unique
-  password        String
-  typeUser        TypeUser
-  description     String?
-  address         Address
-  phone           String
-  passwordChanged Boolean        @default(false)
-  Appointment     Appointment[]
-  History         History[]
-  Professional    Professional[]
-}
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  passwordHash   String
+  role           Role      @default(USER)
 
-type Address {
-  zip_code String
-  number   String
-  street   String
-  city     String
+  phone          String?
+  birthDate      DateTime?
+  gender         Gender?
+  address        String?
+  city           String?
+  state          String?
+  zipCode        String?
+
+  bloodType      String?
+  allergies      String?
+  medicalHistory String?
+  emergencyContact String?
+  emergencyPhone   String?
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+
+  professional   Professional?
+  appointments   Appointment[]     @relation("ClientAppointments")
+  histories      AppointmentHistory[] @relation("UserHistories")
+  documents      MedicalDocument[]
 }
 
 model Professional {
-  id                     String                  @id @default(auto()) @map("_id") @db.ObjectId
-  specialty              String
-  userId                 String                  @unique @db.ObjectId
-  user                   User                    @relation(fields: [userId], references: [id])
-  appointment            Appointment[]
-  availability           Availability[]
-  history                History[]
-  professionalProcedures ProfessionalProcedure[]
+  id             String        @id @default(cuid())
+  userId         String        @unique
+  bio            String?
+  crm            String?
+  specialtyId    String?
+  available      Boolean       @default(true)
+
+  user           User          @relation(fields: [userId], references: [id])
+  specialty      Specialty?    @relation(fields: [specialtyId], references: [id])
+  appointments   Appointment[] @relation("ProfessionalAppointments")
+  histories      AppointmentHistory[] @relation("ProfessionalHistories")
+  availabilities Availability[]
+  exceptions     ScheduleException[]
 }
 
-model Procedure {
-  id                     String                  @id @default(auto()) @map("_id") @db.ObjectId
-  name                   String
-  price                  Float
-  recommendation         String
-  appointment            Appointment[]
-  history                History[]
-  professionalProcedures ProfessionalProcedure[]
-}
-
-model ProfessionalProcedure {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  professionalId String       @db.ObjectId
-  procedureId    String       @db.ObjectId
-  professional   Professional @relation(fields: [professionalId], references: [id])
-  procedure      Procedure    @relation(fields: [procedureId], references: [id])
+model Specialty {
+  id             String        @id @default(cuid())
+  name           String        @unique
+  description    String?
+  professionals  Professional[]
 }
 
 model Availability {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  professionalId String       @db.ObjectId
+  id             String      @id @default(cuid())
+  professionalId String
+  dayOfWeek      Int         // 0 = Domingo, 1 = Segunda...
+  startTime      DateTime
+  endTime        DateTime
+  createdAt      DateTime     @default(now())
+
   professional   Professional @relation(fields: [professionalId], references: [id])
-  date           DateTime
-  time           String
-  status         Status       @default(AVAILABLE)
+}
+
+model ScheduleException {
+  id             String     @id @default(cuid())
+  professionalId String
+  startDate      DateTime
+  endDate        DateTime
+  reason         String?
+  isAvailable    Boolean     @default(false) // false = férias/ausência
+
+  professional   Professional @relation(fields: [professionalId], references: [id])
 }
 
 model Appointment {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  description    String
-  status         Status
-  date           DateTime
-  userId         String       @db.ObjectId
-  user           User         @relation(fields: [userId], references: [id])
-  professionalId String       @db.ObjectId
-  professional   Professional @relation(fields: [professionalId], references: [id])
-  procedureId    String       @db.ObjectId
-  procedure      Procedure    @relation(fields: [procedureId], references: [id])
-  History        History[]
+  id              String        @id @default(cuid())
+  clientId        String
+  professionalId  String
+  scheduledAt     DateTime
+  status          AppointmentStatus @default(PENDING)
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  client          User          @relation("ClientAppointments", fields: [clientId], references: [id])
+  professional    Professional  @relation("ProfessionalAppointments", fields: [professionalId], references: [id])
+  histories       AppointmentHistory[]
 }
 
-model History {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  date           DateTime
-  appointmentId  String       @db.ObjectId
-  appointment    Appointment  @relation(fields: [appointmentId], references: [id])
-  procedureId    String       @db.ObjectId
-  procedure      Procedure    @relation(fields: [procedureId], references: [id])
-  professionalId String       @db.ObjectId
-  professional   Professional @relation(fields: [professionalId], references: [id])
-  userId         String       @db.ObjectId
-  user           User         @relation(fields: [userId], references: [id])
+model AppointmentHistory {
+  id              String        @id @default(cuid())
+  appointmentId   String
+  actionByUserId  String?
+  actionByProfId  String?
+  oldStatus       AppointmentStatus?
+  newStatus       AppointmentStatus
+  createdAt       DateTime      @default(now())
+  description     String?
+
+  appointment     Appointment   @relation(fields: [appointmentId], references: [id])
+  user            User?         @relation("UserHistories", fields: [actionByUserId], references: [id])
+  professional    Professional? @relation("ProfessionalHistories", fields: [actionByProfId], references: [id])
+}
+
+model MedicalDocument {
+  id              String     @id @default(cuid())
+  userId          String
+  appointmentId   String?
+  title           String
+  type            DocumentType // EXAM, PRESCRIPTION, REPORT
+  fileUrl         String
+  uploadedAt      DateTime   @default(now())
+
+  user            User       @relation(fields: [userId], references: [id])
+  appointment     Appointment? @relation(fields: [appointmentId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  USER
+  PROFESSIONAL
+}
+
+enum AppointmentStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  COMPLETED
+  CANCELED
+}
+
+enum DocumentType {
+  EXAM
+  PRESCRIPTION
+  REPORT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
