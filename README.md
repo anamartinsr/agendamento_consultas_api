@@ -21,7 +21,7 @@ Com o crescimento do projeto e a necessidade de alinhar com boas práticas de me
 
 ---
 
-## 🔄 Atualização de Modelagem
+## Atualização de Modelagem
 
 Durante a etapa de análise e modelagem, o esquema inicial foi **refatorado** após identificar inconsistências relacionadas ao armazenamento de documentos e à flexibilidade da agenda dos profissionais.
 
