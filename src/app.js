@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import swaggerUi from 'swagger-ui-express';
-import swaggerFile from './docs/swagger-output.json' assert { type: "json" };
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./docs/swagger.json" assert { type: "json" };
+
 
 import History from './routes/history.js';
 import Token from './routes/token.js';
@@ -40,7 +41,7 @@ class App {
     this.app.use(express.json());
     this.app.use(cors(corsOptions));
     this.app.use(helmet());
-    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+   this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
 
   routes() {
