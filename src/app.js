@@ -16,7 +16,7 @@ import Email from './routes/email.js';
 import ProfessionalProcedure from './routes/professionalProcedure.js';
 
 const whiteList = [
-  process.env.APP_URL_FRONT,
+  process.env.URL,
 ];
 
 const corsOptions = {
