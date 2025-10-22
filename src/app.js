@@ -7,13 +7,14 @@ import helmet from 'helmet';
 import Home from './routes/home.js';
 import History from './routes/history.js';
 import Token from './routes/token.js';
-import User from './routes/user.js';
+import User from './routes/user.route.js';
 import Professional from './routes/professional.js';
 import Procedure from './routes/procedure.js';
 import Availability from './routes/availability.js';
 import Appointment from './routes/appointment.js';
 import Email from './routes/email.js';
 import ProfessionalProcedure from './routes/professionalProcedure.js';
+import { errorHandler } from './middlewares/errorHandler.middleware.js';
 
 const whiteList = [
   process.env.URL,
@@ -55,6 +56,7 @@ class App {
     this.app.use('/appointment', Appointment);
     this.app.use('/email', Email);
     this.app.use('/professionalProcedure', ProfessionalProcedure);
+    this.app.use(errorHandler);
   }
 }
 
