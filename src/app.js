@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import swaggerUi from "swagger-ui-express";
-import swaggerSpec from "./docs/swagger.json" assert { type: "json" };
+// import swaggerUi from "swagger-ui-express";
+// import swaggerSpec from "./docs/swagger.json" assert { type: "json" };
 
-
+import Home from './routes/home.js';
 import History from './routes/history.js';
 import Token from './routes/token.js';
 import User from './routes/user.js';
@@ -41,10 +41,11 @@ class App {
     this.app.use(express.json());
     this.app.use(cors(corsOptions));
     this.app.use(helmet());
-   this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  //  this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
 
   routes() {
+    this.app.use('/', Home);
     this.app.use('/history', History);
     this.app.use('/user', User);
     this.app.use('/tokens', Token);

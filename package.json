@@ -1,11 +1,12 @@
 {
   "name": "agendamento_consultas_api",
   "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.js",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "start": "node dist/server.js",
     "swagger": "node src/lib/swagger.js",
     "prepare": "husky"
   },
@@ -21,7 +22,6 @@
     "globals": "^15.13.0",
     "husky": "^9.1.7",
     "nodemon": "^3.1.7",
-    "sucrase": "^3.35.0",
     "swagger-autogen": "^2.23.7"
   },
   "dependencies": {
@@ -38,6 +38,7 @@
     "nodemailer": "^6.10.0",
     "pg": "^8.16.3",
     "prisma": "^6.5.0",
+    "sucrase": "^3.35.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }

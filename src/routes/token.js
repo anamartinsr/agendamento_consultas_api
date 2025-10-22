@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Token from '../controllers/Token.js';
+import Token from '../controllers/token.js';
 
 const router = new Router();
 

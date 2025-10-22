@@ -24,6 +24,7 @@ Com o crescimento do projeto e a necessidade de alinhar com boas práticas de me
 
 A API agora conta com um ambiente totalmente configurado para execução via Docker e Docker Compose, garantindo isolamento, portabilidade e fácil replicação em diferentes máquinas.
 
+---
 ## Estrutura de Containers
 
 - backend → Container da aplicação Node.js
