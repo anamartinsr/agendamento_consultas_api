@@ -15,6 +15,7 @@ import Appointment from './routes/appointment.js';
 import Email from './routes/email.js';
 import Speciality from './routes/specialty.routes.js';
 import ProfessionalProcedure from './routes/professionalProcedure.js';
+import ScheduleException from './routes/scheduleException.routes.js';
 import { errorHandler } from './middlewares/errorHandler.middleware.js';
 
 const whiteList = [
@@ -58,6 +59,7 @@ class App {
     this.app.use('/email', Email);
     this.app.use('/speciality', Speciality);
     this.app.use('/professionalProcedure', ProfessionalProcedure);
+    this.app.use('/scheduleException', ScheduleException);
     this.app.use(errorHandler);
   }
 }
