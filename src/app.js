@@ -13,6 +13,7 @@ import Procedure from './routes/procedure.js';
 import Availability from './routes/availability.js';
 import Appointment from './routes/appointment.js';
 import Email from './routes/email.js';
+import Speciality from './routes/specialty.routes.js';
 import ProfessionalProcedure from './routes/professionalProcedure.js';
 import { errorHandler } from './middlewares/errorHandler.middleware.js';
 
@@ -55,6 +56,7 @@ class App {
     this.app.use('/availability', Availability);
     this.app.use('/appointment', Appointment);
     this.app.use('/email', Email);
+    this.app.use('/speciality', Speciality);
     this.app.use('/professionalProcedure', ProfessionalProcedure);
     this.app.use(errorHandler);
   }
