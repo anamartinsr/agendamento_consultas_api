@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import Professional from '../controllers/professional.controller.js';
+import ProfessionalController from '../controllers/professional.controller.js';
 
 const router = new Router();
 
-router.post('/', Professional.create);
-router.get('/:id', Professional.show);
-router.get('/', Professional.index);
-router.put('/:id', Professional.update);
-router.delete('/:id', Professional.delete);
+router.post('/', ProfessionalController.create);
+router.get('/', ProfessionalController.index);
+router.get('/:id', ProfessionalController.show);
+router.put('/:id', ProfessionalController.update);
+router.delete('/:id', ProfessionalController.delete);
 
 export default router;

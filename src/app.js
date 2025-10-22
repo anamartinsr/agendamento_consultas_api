@@ -11,7 +11,7 @@ import User from './routes/user.route.js';
 import Professional from './routes/professional.route.js';
 import Procedure from './routes/procedure.js';
 import Availability from './routes/availability.js';
-import Appointment from './routes/appointment.js';
+import Appointment from './routes/appointment.routes.js';
 import Email from './routes/email.js';
 import Speciality from './routes/specialty.routes.js';
 import ProfessionalProcedure from './routes/professionalProcedure.js';
