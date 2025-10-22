@@ -20,6 +20,50 @@ Com o crescimento do projeto e a necessidade de alinhar com boas práticas de me
 - Segurança: Helmet, CORS configurado, express-rate-limit, cookies HttpOnly/Secure
 
 ---
+## Ambiente Docker 
+
+A API agora conta com um ambiente totalmente configurado para execução via Docker e Docker Compose, garantindo isolamento, portabilidade e fácil replicação em diferentes máquinas.
+
+## Estrutura de Containers
+
+- backend → Container da aplicação Node.js
+  - Constrói a imagem a partir do Dockerfile
+  - Instala dependências, copia o código e executa npm start
+  - Porta exposta: 3000
+
+- postgres → Container do banco de dados PostgreSQL
+  - Baseado na imagem oficial postgres:16-alpine
+  - Configurado com variáveis de ambiente (DB_USER, DB_PASSWORD, DB_NAME)
+  - Armazena dados de forma persistente via volume Docker
+
+- Redes
+- O Compose cria duas redes:
+  - internal-network: comunicação segura entre containers
+  - external-network: usada para expor a aplicação externamente
+  - O banco de dados é acessível apenas internamente, evitando exposição pública.
+
+- Comandos
+
+ Subir os containers em segundo plano
+```
+docker compose up -d
+```
+
+Visualizar status dos serviços
+```
+docker compose ps
+```
+
+Ver logs da aplicação
+```
+docker logs -f api_scheduling
+```
+
+Recriar após alterações
+```
+docker compose down
+docker compose up -d --build
+```
 
 ## Atualização de Modelagem
 
@@ -117,10 +161,6 @@ As principais mudanças foram:
 | `Appointment` | Consulta agendada | `User`, `Professional`, `AppointmentHistory` |
 | `AppointmentHistory` | Registro de ações e mudanças de status | `Appointment`, `User`, `Professional` |
 | `MedicalDocument` | Exames, receitas e relatórios digitais | `User`, `Appointment` |
-
----
-
-
 
 ---
 
