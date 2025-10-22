@@ -8,7 +8,7 @@ import Home from './routes/home.js';
 import History from './routes/history.js';
 import Token from './routes/token.js';
 import User from './routes/user.route.js';
-import Professional from './routes/professional.js';
+import Professional from './routes/professional.route.js';
 import Procedure from './routes/procedure.js';
 import Availability from './routes/availability.js';
 import Appointment from './routes/appointment.js';
