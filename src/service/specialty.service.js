@@ -1,4 +1,4 @@
-import SpecialtyRepository from '../repository/specialty.repository.js';
+import SpecialtyRepository from '../repositories/specialty.repository.js';
 
 class SpecialtyService {
   static async create(data) {

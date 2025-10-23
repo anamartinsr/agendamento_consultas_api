@@ -1,4 +1,4 @@
-import AppointmentHistoryRepository from '../repository/appointmentHistory.repository.js';
+import AppointmentHistoryRepository from '../repositories/appointmentHistory.repository.js';
 
 class AppointmentHistoryService {
   static async create(data) {

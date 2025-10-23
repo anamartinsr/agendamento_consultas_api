@@ -1,4 +1,4 @@
-import ScheduleExceptionRepository from '../repository/scheduleException.repository.js';
+import ScheduleExceptionRepository from '../repositories/scheduleException.repository.js';
 
 class ScheduleExceptionService {
   static async create(data) {

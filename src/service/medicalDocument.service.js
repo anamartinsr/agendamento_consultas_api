@@ -1,4 +1,4 @@
-import MedicalDocumentRepository from '../repository/medicalDocument.repository.js';
+import MedicalDocumentRepository from '../repositories/medicalDocument.repository.js';
 
 class MedicalDocumentService {
   static async create(data) {
