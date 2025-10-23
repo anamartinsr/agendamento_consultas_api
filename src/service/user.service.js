@@ -1,5 +1,5 @@
 import UserRepository from '../repositories/user.repository.js';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 class UserService {
   static SALT_ROUNDS = 10;

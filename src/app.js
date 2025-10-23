@@ -4,16 +4,16 @@ import helmet from 'helmet';
 // import swaggerUi from "swagger-ui-express";
 // import swaggerSpec from "./docs/swagger.json" assert { type: "json" };
 
-import Home from './routes/home.js';
+import Home from './routes/home.route.js';
 import History from './routes/appointmentHistory.route.js';
-import Token from './routes/token.js';
+import Token from './routes/token.route.js';
 import User from './routes/user.route.js';
 import Professional from './routes/professional.route.js';
-import Availability from './routes/availability.routes.js';
-import Appointment from './routes/appointment.routes.js';
-import Speciality from './routes/specialty.routes.js';
-import ScheduleException from './routes/scheduleException.routes.js';
-import MedicalDocument from './routes/medicalDocument.routes.js';
+import Availability from './routes/availability.route.js';
+import Appointment from './routes/appointment.route.js';
+import Speciality from './routes/specialty.route.js';
+import ScheduleException from './routes/scheduleException.route.js';
+import MedicalDocument from './routes/medicalDocument.route.js';
 import { errorHandler } from './middlewares/errorHandler.middleware.js';
 
 const whiteList = [
