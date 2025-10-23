@@ -5,7 +5,7 @@ import helmet from 'helmet';
 // import swaggerSpec from "./docs/swagger.json" assert { type: "json" };
 
 import Home from './routes/home.js';
-import History from './routes/history.js';
+import History from './routes/appointmentHistory.route.js';
 import Token from './routes/token.js';
 import User from './routes/user.route.js';
 import Professional from './routes/professional.route.js';

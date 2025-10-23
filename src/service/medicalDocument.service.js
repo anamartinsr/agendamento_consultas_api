@@ -1,32 +1,19 @@
 import MedicalDocumentRepository from '../repository/medicalDocument.repository.js';
-import prisma from '../../prisma/index.js';
 
 class MedicalDocumentService {
   static async create(data) {
-    const { userId, title, type, fileUrl } = data;
+    const { userId, title, type, fileUrl, appointmentId } = data;
 
     if (!userId || !title || !type || !fileUrl) {
-      const error = new Error('Campos obrigatórios: userId, title, type, fileUrl.');
-      error.status = 400;
-      throw error;
+      throw Object.assign(new Error('Campos obrigatórios: userId, title, type, fileUrl.'), { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-    if (!user) {
-      const error = new Error('Usuário não encontrado.');
-      error.status = 404;
-      throw error;
-    }
+    const user = await MedicalDocumentRepository.existsUser(userId);
+    if (!user) throw Object.assign(new Error('Usuário não encontrado.'), { status: 404 });
 
-    if (data.appointmentId) {
-      const appointment = await prisma.appointment.findUnique({
-        where: { id: data.appointmentId },
-      });
-      if (!appointment) {
-        const error = new Error('Consulta não encontrada.');
-        error.status = 404;
-        throw error;
-      }
+    if (appointmentId) {
+      const appointment = await MedicalDocumentRepository.existsAppointment(appointmentId);
+      if (!appointment) throw Object.assign(new Error('Consulta não encontrada.'), { status: 404 });
     }
 
     return MedicalDocumentRepository.create(data);
@@ -38,11 +25,7 @@ class MedicalDocumentService {
 
   static async findById(id) {
     const document = await MedicalDocumentRepository.findById(id);
-    if (!document) {
-      const error = new Error('Documento médico não encontrado.');
-      error.status = 404;
-      throw error;
-    }
+    if (!document) throw Object.assign(new Error('Documento médico não encontrado.'), { status: 404 });
     return document;
   }
 

@@ -1,5 +1,4 @@
 import AppointmentRepository from '../repository/appointment.repository.js';
-import prisma from '../../prisma/index.js';
 
 class AppointmentService {
   static async create(data) {
@@ -11,19 +10,11 @@ class AppointmentService {
       throw error;
     }
 
-    const client = await prisma.user.findUnique({ where: { id: clientId } });
-    if (!client) {
-      const error = new Error('Cliente não encontrado.');
-      error.status = 404;
-      throw error;
-    }
+    const client = await AppointmentRepository.existsUser(clientId);
+    if (!client) throw Object.assign(new Error('Cliente não encontrado.'), { status: 404 });
 
-    const professional = await prisma.professional.findUnique({ where: { id: professionalId } });
-    if (!professional) {
-      const error = new Error('Profissional não encontrado.');
-      error.status = 404;
-      throw error;
-    }
+    const professional = await AppointmentRepository.existsProfessional(professionalId);
+    if (!professional) throw Object.assign(new Error('Profissional não encontrado.'), { status: 404 });
 
     return AppointmentRepository.create({
       clientId,

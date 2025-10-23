@@ -2,34 +2,19 @@ import prisma from '../../prisma/index.js';
 
 class AppointmentRepository {
   async create(data) {
-    return prisma.appointment.create({
-      data,
-      include: {
-        client: true,
-        professional: true,
-        histories: true,
-      },
-    });
+    return prisma.appointment.create({ data });
   }
 
   async findAll() {
     return prisma.appointment.findMany({
-      include: {
-        client: true,
-        professional: true,
-        histories: true,
-      },
+      include: { client: true, professional: true, histories: true },
     });
   }
 
   async findById(id) {
     return prisma.appointment.findUnique({
       where: { id },
-      include: {
-        client: true,
-        professional: true,
-        histories: true,
-      },
+      include: { client: true, professional: true, histories: true },
     });
   }
 
@@ -37,18 +22,20 @@ class AppointmentRepository {
     return prisma.appointment.update({
       where: { id },
       data,
-      include: {
-        client: true,
-        professional: true,
-        histories: true,
-      },
+      include: { client: true, professional: true, histories: true },
     });
   }
 
   async delete(id) {
-    return prisma.appointment.delete({
-      where: { id },
-    });
+    return prisma.appointment.delete({ where: { id } });
+  }
+
+  async existsUser(id) {
+    return prisma.user.findUnique({ where: { id } });
+  }
+
+  async existsProfessional(id) {
+    return prisma.professional.findUnique({ where: { id } });
   }
 }
 

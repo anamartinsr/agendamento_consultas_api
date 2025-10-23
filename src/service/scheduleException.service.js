@@ -1,31 +1,15 @@
 import ScheduleExceptionRepository from '../repository/scheduleException.repository.js';
-import prisma from '../../prisma/index.js';
 
 class ScheduleExceptionService {
   static async create(data) {
     const { professionalId, startDate, endDate } = data;
 
-    if (!professionalId) {
-      const error = new Error('O campo "professionalId" é obrigatório.');
-      error.status = 400;
-      throw error;
+    if (!professionalId || !startDate || !endDate) {
+      throw Object.assign(new Error('Campos obrigatórios: professionalId, startDate, endDate.'), { status: 400 });
     }
 
-    if (!startDate || !endDate) {
-      const error = new Error('Os campos "startDate" e "endDate" são obrigatórios.');
-      error.status = 400;
-      throw error;
-    }
-
-    const professional = await prisma.professional.findUnique({
-      where: { id: professionalId },
-    });
-
-    if (!professional) {
-      const error = new Error('Profissional não encontrado.');
-      error.status = 404;
-      throw error;
-    }
+    const professional = await ScheduleExceptionRepository.existsProfessional(professionalId);
+    if (!professional) throw Object.assign(new Error('Profissional não encontrado.'), { status: 404 });
 
     return ScheduleExceptionRepository.create({
       professionalId,
@@ -42,11 +26,7 @@ class ScheduleExceptionService {
 
   static async findById(id) {
     const exception = await ScheduleExceptionRepository.findById(id);
-    if (!exception) {
-      const error = new Error('Exceção de agenda não encontrada.');
-      error.status = 404;
-      throw error;
-    }
+    if (!exception) throw Object.assign(new Error('Exceção de agenda não encontrada.'), { status: 404 });
     return exception;
   }
 
