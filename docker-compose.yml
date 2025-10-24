@@ -12,7 +12,6 @@ services:
       - postgres
     networks:
      - internal-network
-     - external-network
 
   postgres:
     image: postgres:16-alpine
@@ -36,5 +35,4 @@ networks:
   internal-network:
     driver: bridge
     internal: true
-  external-network:
-    driver: bridge
+ 

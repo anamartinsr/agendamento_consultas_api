@@ -8,122 +8,122 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String
-  email          String    @unique
-  passwordHash   String
-  role           Role      @default(USER)
+  id           String @id @default(cuid())
+  name         String
+  email        String @unique
+  passwordHash String
+  role         Role   @default(USER)
 
-  phone          String?
-  birthDate      DateTime?
-  gender         Gender?
-  address        String?
-  city           String?
-  state          String?
-  zipCode        String?
+  phone     String?
+  birthDate DateTime?
+  gender    Gender?
+  address   String?
+  city      String?
+  state     String?
+  zipCode   String?
 
-  bloodType      String?
-  allergies      String?
-  medicalHistory String?
+  bloodType        String?
+  allergies        String?
+  medicalHistory   String?
   emergencyContact String?
   emergencyPhone   String?
 
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-
-  professional   Professional?
-  appointments   Appointment[]     @relation("ClientAppointments")
-  histories      AppointmentHistory[] @relation("UserHistories")
-  documents      MedicalDocument[]
+  professional Professional?
+  appointments Appointment[]        @relation("ClientAppointments")
+  histories    AppointmentHistory[] @relation("UserHistories")
+  documents    MedicalDocument[]
 }
 
 model Professional {
-  id             String        @id @default(cuid())
-  userId         String        @unique
-  bio            String?
-  crm            String?
-  specialtyId    String?
-  available      Boolean       @default(true)
+  id          String  @id @default(cuid())
+  userId      String  @unique
+  bio         String?
+  crm         String?
+  specialtyId String?
+  available   Boolean @default(true)
 
-  user           User          @relation(fields: [userId], references: [id])
-  specialty      Specialty?    @relation(fields: [specialtyId], references: [id])
-  appointments   Appointment[] @relation("ProfessionalAppointments")
+  user           User                 @relation(fields: [userId], references: [id])
+  specialty      Specialty?           @relation(fields: [specialtyId], references: [id])
+  appointments   Appointment[]        @relation("ProfessionalAppointments")
   histories      AppointmentHistory[] @relation("ProfessionalHistories")
   availabilities Availability[]
   exceptions     ScheduleException[]
 }
 
 model Specialty {
-  id             String        @id @default(cuid())
-  name           String        @unique
-  description    String?
-  professionals  Professional[]
+  id            String         @id @default(cuid())
+  name          String         @unique
+  description   String?
+  professionals Professional[]
 }
 
 model Availability {
-  id             String      @id @default(cuid())
+  id             String   @id @default(cuid())
   professionalId String
-  dayOfWeek      Int         // 0 = Domingo, 1 = Segunda...
+  dayOfWeek      Int // 0 = Domingo, 1 = Segunda...
   startTime      DateTime
   endTime        DateTime
-  createdAt      DateTime     @default(now())
+  createdAt      DateTime @default(now())
 
-  professional   Professional @relation(fields: [professionalId], references: [id])
+  professional Professional @relation(fields: [professionalId], references: [id])
 }
 
 model ScheduleException {
-  id             String     @id @default(cuid())
+  id             String   @id @default(cuid())
   professionalId String
   startDate      DateTime
   endDate        DateTime
   reason         String?
-  isAvailable    Boolean     @default(false) // false = férias/ausência
+  isAvailable    Boolean  @default(false) // false = férias/ausência
 
-  professional   Professional @relation(fields: [professionalId], references: [id])
+  professional Professional @relation(fields: [professionalId], references: [id])
 }
 
 model Appointment {
-  id              String        @id @default(cuid())
-  clientId        String
-  professionalId  String
-  scheduledAt     DateTime
-  status          AppointmentStatus @default(PENDING)
-  notes           String?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id             String            @id @default(cuid())
+  clientId       String
+  professionalId String
+  scheduledAt    DateTime
+  status         AppointmentStatus @default(PENDING)
+  notes          String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
 
-  client          User          @relation("ClientAppointments", fields: [clientId], references: [id])
-  professional    Professional  @relation("ProfessionalAppointments", fields: [professionalId], references: [id])
-  histories       AppointmentHistory[]
+  client           User                 @relation("ClientAppointments", fields: [clientId], references: [id])
+  professional     Professional         @relation("ProfessionalAppointments", fields: [professionalId], references: [id])
+  histories        AppointmentHistory[]
+  medicalDocuments MedicalDocument[]
 }
 
 model AppointmentHistory {
-  id              String        @id @default(cuid())
-  appointmentId   String
-  actionByUserId  String?
-  actionByProfId  String?
-  oldStatus       AppointmentStatus?
-  newStatus       AppointmentStatus
-  createdAt       DateTime      @default(now())
-  description     String?
+  id             String             @id @default(cuid())
+  appointmentId  String
+  actionByUserId String?
+  actionByProfId String?
+  oldStatus      AppointmentStatus?
+  newStatus      AppointmentStatus
+  createdAt      DateTime           @default(now())
+  description    String?
 
-  appointment     Appointment   @relation(fields: [appointmentId], references: [id])
-  user            User?         @relation("UserHistories", fields: [actionByUserId], references: [id])
-  professional    Professional? @relation("ProfessionalHistories", fields: [actionByProfId], references: [id])
+  appointment  Appointment   @relation(fields: [appointmentId], references: [id])
+  user         User?         @relation("UserHistories", fields: [actionByUserId], references: [id])
+  professional Professional? @relation("ProfessionalHistories", fields: [actionByProfId], references: [id])
 }
 
 model MedicalDocument {
-  id              String     @id @default(cuid())
-  userId          String
-  appointmentId   String?
-  title           String
-  type            DocumentType // EXAM, PRESCRIPTION, REPORT
-  fileUrl         String
-  uploadedAt      DateTime   @default(now())
+  id            String       @id @default(cuid())
+  userId        String
+  appointmentId String?
+  title         String
+  type          DocumentType
+  fileUrl       String
+  uploadedAt    DateTime     @default(now())
 
-  user            User       @relation(fields: [userId], references: [id])
-  appointment     Appointment? @relation(fields: [appointmentId], references: [id])
+  user        User         @relation(fields: [userId], references: [id])
+  appointment Appointment? @relation(fields: [appointmentId], references: [id])
 }
 
 enum Role {
