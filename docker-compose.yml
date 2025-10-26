@@ -1,4 +1,3 @@
-version: "3.9"
 
 services:
   backend:
@@ -7,6 +6,8 @@ services:
     env_file: .env
     ports:
       - "3000:3000"
+    volumes:
+      - ./prisma:/usr/src/api_scheduling/prisma
     restart: always
     depends_on:
       - postgres
@@ -28,11 +29,11 @@ services:
     networks:
       - internal-network
 
-volumes: 
+volumes:
   db:
 
 networks:
   internal-network:
     driver: bridge
-    internal: true
- 
+    # internal: true
+
